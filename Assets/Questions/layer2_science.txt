@@ -1,0 +1,36 @@
+layer2_science
+
+
+ciencia:
+
+  factos:
+    - "A gravidade é a força que atrai objetos uns aos outros e é responsável por manter planetas em órbita ao redor do Sol."
+    - "A camada de ozônio na estratosfera protege a Terra dos raios ultravioletas prejudiciais, absorvendo a maior parte dessa radiação."
+    - "A teoria das placas tectônicas sugere que a crosta terrestre é dividida em placas que se movem, causando fenômenos como terremotos e a formação de montanhas."
+    - "As células são as unidades básicas de vida e compõem todos os organismos vivos, sejam eles unicelulares ou multicelulares."
+    - "A evolução é o processo pelo qual diferentes espécies se desenvolvem e se diversificam ao longo do tempo, principalmente através da seleção natural."
+    - "A fotossíntese é o processo pelo qual plantas e outros organismos convertem luz solar, água e dióxido de carbono em oxigênio e glicose, essenciais para a vida na Terra."
+
+  perguntas:
+    - "O que é a gravidade e qual sua função no sistema solar?"
+    - "Qual é a função da camada de ozônio na atmosfera terrestre?"
+    - "Qual é a teoria das placas tectônicas e quais fenômenos ela ajuda a explicar?"
+    - "Qual é a função das células nos organismos vivos?"
+    - "Como funciona o processo de evolução?"
+    - "Para que serve a fotossíntese nas plantas?"
+
+  respostasCertas:
+    - "É a força que atrai os objetos uns aos outros e mantém os planetas em órbita ao redor do Sol."
+    - "Absorver a maior parte da radiação ultravioleta prejudicial, protegendo a Terra."
+    - "Que a crosta terrestre é dividida em placas que se movem, causando terremotos e a formação de montanhas."
+    - "Servem como unidades básicas de vida, permitindo a formação e o funcionamento dos organismos."
+    - "É o processo de diversificação das espécies através da seleção natural ao longo do tempo."
+    - "Permite que as plantas produzam energia e oxigênio, essenciais para a vida na Terra."
+
+  respostasIncorretas:
+    - ["É uma força que apenas afeta objetos grandes como planetas e estrelas.", "É uma força que repele objetos uns dos outros no espaço."]
+    - ["Reflete a radiação solar para o espaço, regulando o clima.", "Diminui a quantidade de oxigênio na atmosfera."]
+    - ["Que os continentes são imóveis e fixos na crosta terrestre.", "Que a superfície terrestre é completamente sólida e inquebrável."]
+    - ["Somente armazenam informações genéticas sem realizar nenhuma função.", "Atuam apenas na reprodução dos organismos."]
+    - ["É um processo que ocorre em dias de chuva e influencia o comportamento animal.", "Um ciclo biológico que apenas afeta os animais."]
+    - ["Produz apenas glicose, mas não tem efeito no oxigênio.", "É apenas um processo de absorção de luz solar sem outra função."]

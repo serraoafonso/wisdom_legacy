@@ -1,0 +1,35 @@
+layer4_history
+
+historia:
+
+  factos:
+    - "O Renascimento foi um movimento cultural que ocorreu na Europa entre os séculos XIV e XVII, caracterizado pelo ressurgimento das artes, ciências e do pensamento humanista."
+    - "A Revolução Francesa, que começou em 1789, foi um marco que derrubou a monarquia absolutista na França, resultando em profundas mudanças sociais e políticas."
+    - "A Guerra Civil Americana (1861-1865) foi um conflito entre os estados do Norte e do Sul dos EUA, em grande parte devido à questão da escravidão e à luta pela preservação da União."
+    - "A Primeira Guerra Mundial (1914-1918) envolveu grandes potências mundiais e resultou em milhões de mortos, além de mudanças significativas no mapa político da Europa."
+    - "A Era das Grandes Navegações, entre os séculos XV e XVII, foi um período de expansão marítima europeia que levou à descoberta de novas rotas e territórios ao redor do mundo."
+    - "A criação da Organização das Nações Unidas (ONU) em 1945 teve como objetivo promover a paz e a cooperação internacional após a devastação da Segunda Guerra Mundial."
+
+  perguntas:
+    - "Qual foi o impacto cultural do Renascimento na Europa?"
+    - "Quais foram algumas das principais consequências da Revolução Francesa?"
+    - "Qual foi a causa central da Guerra Civil Americana?"
+    - "Qual foi o principal resultado da Primeira Guerra Mundial para o mapa político europeu?"
+    - "Qual era o principal objetivo da Era das Grandes Navegações?"
+    - "Por que foi criada a ONU em 1945?"
+
+  respostasCertas:
+    - "Ressurgimento das artes e ciências e fortalecimento do pensamento humanista."
+    - "Derrubada da monarquia e estabelecimento de princípios de igualdade e liberdade."
+    - "Conflito entre estados do Norte e do Sul sobre a questão da escravidão e a preservação da União."
+    - "Mudanças significativas nas fronteiras europeias e o enfraquecimento de impérios tradicionais."
+    - "Descobrir novas rotas e territórios para expandir o comércio e a influência europeia."
+    - "Promover a paz e a cooperação internacional após a Segunda Guerra Mundial."
+
+  respostasIncorretas:
+    - ["Declínio do interesse em ciências e artes, com foco exclusivo em religião.", "Expansão da monarquia absoluta na Europa."]
+    - ["Fortalecimento da monarquia na França.", "Criação de uma aliança entre França e Inglaterra contra a Áustria."]
+    - ["Questões territoriais com o México.", "Conflito religioso entre estados do Norte e do Sul dos EUA."]
+    - ["Unificação completa dos países europeus sob um governo único.", "Expansão do império alemão sobre toda a Europa Ocidental."]
+    - ["Exploração de minas de ouro no continente africano.", "Conquista e colonização da Ásia exclusivamente."]
+    - ["Promover a divisão dos territórios coloniais da Europa.", "Organizar o comércio internacional e a exploração econômica global."]

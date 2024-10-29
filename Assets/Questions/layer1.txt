@@ -1,0 +1,75 @@
+layer1:
+
+  ciencia:
+    factos:
+      - "O DNA contém as instruções genéticas que regulam o desenvolvimento e funcionamento dos organismos. Ele é passado de geração em geração, garantindo a hereditariedade das características entre os seres vivos."
+      - "Efeito de Estufa: Fenômeno em que gases na atmosfera da Terra, como o dióxido de carbono, retêm calor."
+      - "Teoria do Big Bang: Sugere que o universo começou há cerca de 13,8 bilhões de anos a partir de uma explosão."
+
+    perguntas:
+      - "Isto implica..."
+      - "Portanto o aumento do efeito de estufa leva ao..."
+      - "O que é a Teoria do Big Bang?"
+
+    respostasCertas:
+      - "Que teoricamente todos os organismos têm um ancestral comum."
+      - "Aumento das temperaturas médias da Terra, causando mudanças climáticas."
+      - "A sugestão de que o universo começou a partir de uma explosão."
+
+    respostasIncorretas:
+      - "Que cada espécie desenvolve seu próprio DNA sem relação com outras."
+      - "Que o DNA muda completamente em cada geração."
+      - "Resfriamento global, pois a camada de ozônio se torna mais espessa."
+      - "Melhoria na qualidade do ar devido à redução das emissões de carbono."
+      - "A ideia de que o universo sempre existiu."
+      - "Uma teoria sobre a formação de estrelas."
+
+
+  financas:
+    factos:
+      - "A inflação é o aumento geral dos preços de bens e serviços em uma economia ao longo do tempo. Isso significa que, com a inflação, o dinheiro perde seu poder de compra."
+      - "Segundo a lei da oferta quanto maior o preço, maior a oferta e menor a procura e, consequentemente, quanto menor o preço, menor a oferta e maior a procura."
+      - "Ter uma reserva de emergência é fundamental para evitar endividamento em situações inesperadas. A recomendação geral é que essa reserva cubra de 3 a 6 meses de despesas mensais básicas."
+
+    perguntas:
+      - "Qual dos seguintes fatores pode contribuir para o aumento da inflação?"
+      - "O João tem uma venda de sumo de laranja e pretende aumentar o preço do seu produto, o que acontecerá à venda do João?"
+      - "Qual é o principal objetivo de uma reserva de emergência?"
+
+    respostasCertas:
+      - "Aumento nos preços do petróleo."
+      - "A procura diminui."
+      - "Fornecer um suporte financeiro durante períodos de imprevistos ou perda de renda."
+
+    respostasIncorretas:
+      - "Redução dos salários."
+      - "Aumento do desemprego."
+      - "A oferta diminui."
+      - "A procura aumenta."
+      - "Possibilitar investimentos em produtos financeiros de alto rendimento."
+      - "Proteger o patrimônio contra flutuações de mercado."
+
+
+  historia:
+    factos:
+      - "A Revolução Industrial, que começou no final do século XVIII na Inglaterra, marcou uma transição significativa de economias agrárias e artesanais para economias industriais e urbanas, alterando a maneira como as pessoas trabalhavam e viviam."
+      - "A Queda do Muro de Berlim, em 1989, foi um evento simbólico que marcou o fim da Guerra Fria. O muro, que dividia a Alemanha Oriental e Ocidental desde 1961, foi um símbolo da separação ideológica entre o bloco soviético e o ocidental."
+      - "A Revolução dos Cravos, que ocorreu em 25 de abril de 1974, foi um movimento pacífico que resultou na queda da ditadura do Estado Novo em Portugal. Este evento é comemorado anualmente como o Dia da Liberdade e simboliza a transição do país para a democracia."
+
+    perguntas:
+      - "Qual das seguintes mudanças sociais foi uma consequência direta da Revolução Industrial?"
+      - "Qual foi uma das principais consequências da queda do Muro de Berlim?"
+      - "Qual foi o principal objetivo da Revolução dos Cravos em 1974?"
+
+    respostasCertas:
+      - "Crescimento das cidades e urbanização."
+      - "Unificação da Alemanha."
+      - "Derrubar a ditadura do Estado Novo e restaurar a democracia."
+
+    respostasIncorretas:
+      - "Redução do comércio internacional."
+      - "Aumento da população rural."
+      - "Aumento da imigração para a Alemanha Oriental."
+      - "Redução do comércio entre a Alemanha e a França."
+      - "Aumentar a influência de Portugal nas colônias africanas."
+      - "Expandir o território português na Europa."
