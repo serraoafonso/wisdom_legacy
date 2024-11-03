@@ -1134,7 +1134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &133970838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6126,7 +6126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1139047322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6225,18 +6225,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   themeText: {fileID: 1111870200}
-  factPanel: {fileID: 842005845}
-  questionPanel: {fileID: 73116214}
   factText: {fileID: 454478266}
   questionText: {fileID: 1030326722}
   answerButtons:
   - {fileID: 539429354}
   - {fileID: 972037990}
   - {fileID: 1477196773}
+  factPanel: {fileID: 842005845}
+  questionPanel: {fileID: 73116214}
   audioSource: {fileID: 2111347247}
   correctSound: {fileID: 8300000, guid: b799846136f17df44a3139adb5428cfa, type: 3}
   incorrectSound: {fileID: 8300000, guid: b137adc32229ece499837ef6a1ba41dd, type: 3}
-  Canva: {fileID: 1139047321}
 --- !u!1 &1197097133
 GameObject:
   m_ObjectHideFlags: 0
@@ -8253,7 +8252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1812909668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8266,13 +8265,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de97bbf1d304d3a4c862f838acab808b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionText: {fileID: 0}
-  answerButtons: []
-  audioSource: {fileID: 0}
-  correctSound: {fileID: 0}
-  incorrectSound: {fileID: 0}
-  quizPanel: {fileID: 0}
-  victoryPanel: {fileID: 0}
+  questionText: {fileID: 1721563569}
+  answerButtons:
+  - {fileID: 125143547}
+  - {fileID: 420497702}
+  - {fileID: 1955124569}
+  audioSource: {fileID: 916958797}
+  correctSound: {fileID: 8300000, guid: b799846136f17df44a3139adb5428cfa, type: 3}
+  incorrectSound: {fileID: 8300000, guid: b137adc32229ece499837ef6a1ba41dd, type: 3}
+  quizPanel: {fileID: 2111755569}
+  victoryPanel: {fileID: 133970837}
 --- !u!114 &1812909669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9111,7 +9113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2111755570
 RectTransform:
   m_ObjectHideFlags: 0
