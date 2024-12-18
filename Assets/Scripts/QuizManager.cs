@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class ThemeData
@@ -21,6 +22,7 @@ public class QuizManager : MonoBehaviour
     public GameObject factPanel, questionPanel;
     public AudioSource audioSource;
     public AudioClip correctSound, incorrectSound;
+    public Button nextButton;
 
     private int currentThemeIndex = 0;
     private int currentFactIndex = 0;
@@ -106,6 +108,7 @@ public class QuizManager : MonoBehaviour
         InitializeQuestionPool();
         SetTheme();
         DisplayRandomFact();
+        nextButton.onClick.AddListener(OnNextButtonClicked);
     }
 
     private void InitializeQuestionPool()
@@ -133,10 +136,10 @@ public class QuizManager : MonoBehaviour
 
     private void SetRandomFactIndex()
     {
-        currentFactIndex = questionPool[currentThemeIndex][Random.Range(0, questionPool[currentThemeIndex].Count)];
+        currentFactIndex = questionPool[currentThemeIndex][UnityEngine.Random.Range(0, questionPool[currentThemeIndex].Count)];
     }
 
-    private void RemoveFromQuestionPool()
+    private void RemoveFromQuestionPool()   
     {
         questionPool[currentThemeIndex].Remove(currentFactIndex);
         if (questionPool[currentThemeIndex].Count == 0)
@@ -145,10 +148,16 @@ public class QuizManager : MonoBehaviour
 
     public void OnNextButtonClicked()
     {
-        questionText.text = themesData[currentThemeIndex].questions[currentFactIndex];
-        SetupAnswers();
+
+       Debug.Log("OnNextButtonClicked was called!");
+       // Sua lógica existente
+
         factPanel.SetActive(false);
         questionPanel.SetActive(true);
+
+        questionText.text = themesData[currentThemeIndex].questions[currentFactIndex];
+        SetupAnswers();
+        
     }
 
     private void SetupAnswers()
@@ -157,7 +166,7 @@ public class QuizManager : MonoBehaviour
         var incorrectAnswers = themesData[currentThemeIndex].incorrectAnswers[currentFactIndex];
 
         List<string> allAnswers = new List<string>(incorrectAnswers);
-        int correctPosition = Random.Range(0, allAnswers.Count + 1);
+        int correctPosition = UnityEngine.Random.Range(0, allAnswers.Count + 1);
         allAnswers.Insert(correctPosition, correctAnswer);
 
         for (int i = 0; i < answerButtons.Length; i++)

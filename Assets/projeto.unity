@@ -656,7 +656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &73116215
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1927,7 +1927,7 @@ Transform:
   m_GameObject: {fileID: 178076883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.1, y: 12.7, z: -10}
+  m_LocalPosition: {x: -39, y: 10.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2368,7 +2368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &221352596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2648,8 +2648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5acb1c0973bd242b0aa65809fde072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canva: {fileID: 180364210}
-  CanvaFt: {fileID: 180364210}
+  Canva: {fileID: 1477078949}
+  CanvaFt: {fileID: 1477078949}
 --- !u!61 &290713633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6880,7 +6880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &842005846
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7645,7 +7645,7 @@ Transform:
   m_GameObject: {fileID: 883604044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.1, y: 12.7, z: 0}
+  m_LocalPosition: {x: -39, y: 10.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10182,6 +10182,7 @@ MonoBehaviour:
   audioSource: {fileID: 2111347247}
   correctSound: {fileID: 8300000, guid: b799846136f17df44a3139adb5428cfa, type: 3}
   incorrectSound: {fileID: 8300000, guid: b137adc32229ece499837ef6a1ba41dd, type: 3}
+  nextButton: {fileID: 1790995115}
 --- !u!1 &1146773345
 GameObject:
   m_ObjectHideFlags: 0
@@ -11137,8 +11138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5acb1c0973bd242b0aa65809fde072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canva: {fileID: 1477078949}
-  CanvaFt: {fileID: 1477078949}
+  Canva: {fileID: 180364210}
+  CanvaFt: {fileID: 180364210}
 --- !u!61 &1256461936
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11843,6 +11844,10 @@ MonoBehaviour:
   factPanel: {fileID: 1964385299}
   questionPanel: {fileID: 449937333}
   themeText: {fileID: 1538845723}
+  Canva: {fileID: 1477078949}
+  playerMovement: {fileID: 0}
+  book1: {fileID: 290713631}
+  player: {fileID: 883604044}
 --- !u!114 &1477078951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12923,7 +12928,7 @@ Transform:
   m_GameObject: {fileID: 1598613991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.1, y: 12.7, z: -10}
+  m_LocalPosition: {x: -39, y: 10.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class ScienceQuizManager : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class ScienceQuizManager : MonoBehaviour
     public GameObject factPanel; // Painel do fato
     public GameObject questionPanel; // Painel da pergunta
     public TextMeshProUGUI themeText;
+    public GameObject Canva;
 
+    public PlayerMovement playerMovement;
+    public GameObject book1;
+    public GameObject player;
     private int currentFactIndex;
     private List<int> factIndexes;
 
@@ -120,14 +125,60 @@ public class ScienceQuizManager : MonoBehaviour
         {
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
+            DisableBookCollider(book1);
+            Canva.SetActive(false);
+            playerMovement.collidedStop = false;
         }
         else
         {
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
+            playerMovement.collidedStop = false;
+            Canva.SetActive(false);
+            if (player != null)
+            {
+                player.transform.position = new Vector3(-39, -10.5f, player.transform.position.z); // Alterar posição
+                Debug.Log("Jogador reposicionado para a posição (87.2, -682).");
+            }
         }
 
         audioSource.Play();
         DisplayRandomFact();
     }
+
+    private void DisableBookCollider(GameObject book)
+    {
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false; // Desativa o Box Collider 2D
+                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+            }
+            else
+            {
+                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+            }
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Set body type to Dynamic
+                bookRigidbody.gravityScale = 10;
+                Debug.Log($"Rigidbody2D of the book {book.name} set to Dynamic.");
+            }
+            else
+            {
+                Debug.LogWarning($"Rigidbody2D not found on the book {book.name}.");
+            }
+            Destroy(book, 5);
+        }
+        else
+        {
+            Debug.LogWarning($"Livro não encontrado.");
+        }
+    }
+
 }
