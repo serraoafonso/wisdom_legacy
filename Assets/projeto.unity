@@ -2011,6 +2011,10 @@ MonoBehaviour:
   factPanel: {fileID: 1750863459}
   questionPanel: {fileID: 1365641572}
   themeText: {fileID: 346775262}
+  Canva: {fileID: 180364210}
+  playerMovement: {fileID: 883604047}
+  book1: {fileID: 1256461934}
+  player: {fileID: 883604044}
 --- !u!114 &180364212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10827,6 +10831,10 @@ MonoBehaviour:
   factPanel: {fileID: 1197097133}
   questionPanel: {fileID: 1630020191}
   themeText: {fileID: 621926958}
+  Canva: {fileID: 1239337297}
+  playerMovement: {fileID: 883604047}
+  book1: {fileID: 1542252601}
+  player: {fileID: 883604044}
 --- !u!114 &1239337299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11845,7 +11853,7 @@ MonoBehaviour:
   questionPanel: {fileID: 449937333}
   themeText: {fileID: 1538845723}
   Canva: {fileID: 1477078949}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 883604047}
   book1: {fileID: 290713631}
   player: {fileID: 883604044}
 --- !u!114 &1477078951
@@ -14582,6 +14590,7 @@ MonoBehaviour:
   incorrectSound: {fileID: 8300000, guid: b137adc32229ece499837ef6a1ba41dd, type: 3}
   quizPanel: {fileID: 2111755569}
   victoryPanel: {fileID: 133970837}
+  playerMovement: {fileID: 883604047}
 --- !u!114 &1812909669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16326,7 +16335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: aecb37171a5db474c910da720649f75a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 133.68524
+      value: 183.42952
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: aecb37171a5db474c910da720649f75a, type: 3}
       propertyPath: m_LocalScale.y
@@ -16334,7 +16343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: aecb37171a5db474c910da720649f75a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -67.628
+      value: -82.5507
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: aecb37171a5db474c910da720649f75a, type: 3}
       propertyPath: m_LocalPosition.y

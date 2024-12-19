@@ -137,7 +137,7 @@ public class ScienceQuizManager : MonoBehaviour
             Canva.SetActive(false);
             if (player != null)
             {
-                player.transform.position = new Vector3(-39, -10.5f, player.transform.position.z); // Alterar posição
+                player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Alterar posição
                 Debug.Log("Jogador reposicionado para a posição (87.2, -682).");
             }
         }
