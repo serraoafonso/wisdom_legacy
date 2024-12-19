@@ -13,6 +13,7 @@ public class FinalQuizManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
 
+    public PlayerMovement playerMovement;
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
     private List<int> questionIndexes;
@@ -124,6 +125,7 @@ public class FinalQuizManager : MonoBehaviour
             audioSource.PlayOneShot(correctSound);
             if (correctAnswersCount >= 3)
             {
+                playerMovement.collidedStop = false;
                 Victory();
                 return;
             }

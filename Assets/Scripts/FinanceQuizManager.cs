@@ -14,6 +14,11 @@ public class FinanceQuizManager : MonoBehaviour
     public GameObject factPanel; // Painel do fato
     public GameObject questionPanel; // Painel da pergunta
     public TextMeshProUGUI themeText;
+    public GameObject Canva; // Painel para controle adicional
+
+    public PlayerMovement playerMovement; // Referência ao script PlayerMovement
+    public GameObject book1; // Referência ao objeto do livro
+    public GameObject player; // Referência ao jogador
 
     private int currentFactIndex;
     private List<int> factIndexes;
@@ -92,18 +97,13 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void SetupAnswers()
     {
-        // Obter a resposta correta
         string correctAnswer = correctAnswers[currentFactIndex];
-
-        // Obter as respostas incorretas
         string[] incorrectAnswersArray = incorrectAnswers[currentFactIndex];
 
-        // Criar lista para todas as respostas e adicionar a correta em posição aleatória
         List<string> allAnswers = new List<string>(incorrectAnswersArray);
         int correctAnswerPosition = Random.Range(0, allAnswers.Count + 1);
         allAnswers.Insert(correctAnswerPosition, correctAnswer);
 
-        // Configurar botões de resposta
         for (int i = 0; i < answerButtons.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[i];
@@ -120,14 +120,50 @@ public class FinanceQuizManager : MonoBehaviour
         {
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
+            DisableBookCollider(book1);
+            Canva.SetActive(false);
+            playerMovement.collidedStop = false;
         }
         else
         {
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
+            playerMovement.collidedStop = false;
+            Canva.SetActive(false);
+            if (player != null)
+            {
+                player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Reposicionar jogador
+                Debug.Log("Jogador reposicionado para a posição inicial.");
+            }
         }
 
         audioSource.Play();
         DisplayRandomFact();
+    }
+
+    private void DisableBookCollider(GameObject book)
+    {
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false;
+                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+            }
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic;
+                bookRigidbody.gravityScale = 10;
+                Debug.Log($"Rigidbody2D do livro {book.name} alterado para Dynamic.");
+            }
+            Destroy(book, 5);
+        }
+        else
+        {
+            Debug.LogWarning("Livro não encontrado.");
+        }
     }
 }
