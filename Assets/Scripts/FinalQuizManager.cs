@@ -13,6 +13,8 @@ public class FinalQuizManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
 
+    public GameObject finalCanvas;
+    public GameObject book1; // Referência ao objeto do livro
     public PlayerMovement playerMovement;
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
@@ -126,7 +128,9 @@ public class FinalQuizManager : MonoBehaviour
             if (correctAnswersCount >= 3)
             {
                 playerMovement.collidedStop = false;
-                Victory();
+                DisableBookCollider(book1);
+                finalCanvas.SetActive(false);
+                //Victory();
                 return;
             }
         }
@@ -145,4 +149,41 @@ public class FinalQuizManager : MonoBehaviour
         quizPanel.SetActive(false);
         victoryPanel.SetActive(true);
     }
+
+    private void DisableBookCollider(GameObject book)
+    {
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false; // Desativa o Box Collider 2D
+                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+            }
+            else
+            {
+                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+            }
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Set body type to Dynamic
+                bookRigidbody.gravityScale = 10;
+                Debug.Log($"Rigidbody2D of the book {book.name} set to Dynamic.");
+            }
+            else
+            {
+                Debug.LogWarning($"Rigidbody2D not found on the book {book.name}.");
+            }
+            Destroy(book, 5);
+        }
+        else
+        {
+            Debug.LogWarning($"Livro não encontrado.");
+        }
+    }
+
 }
+

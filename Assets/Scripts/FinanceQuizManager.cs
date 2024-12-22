@@ -16,6 +16,7 @@ public class FinanceQuizManager : MonoBehaviour
     public TextMeshProUGUI themeText;
     public GameObject Canva; // Painel para controle adicional
 
+    [SerializeField] private GhostText ghostText;
     public PlayerMovement playerMovement; // Referência ao script PlayerMovement
     public GameObject book1; // Referência ao objeto do livro
     public GameObject player; // Referência ao jogador
@@ -126,6 +127,7 @@ public class FinanceQuizManager : MonoBehaviour
         }
         else
         {
+            ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
             playerMovement.collidedStop = false;

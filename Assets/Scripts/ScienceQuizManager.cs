@@ -17,6 +17,7 @@ public class ScienceQuizManager : MonoBehaviour
     public TextMeshProUGUI themeText;
     public GameObject Canva;
 
+    [SerializeField] private GhostText ghostText;
     public PlayerMovement playerMovement;
     public GameObject book1;
     public GameObject player;
@@ -131,6 +132,7 @@ public class ScienceQuizManager : MonoBehaviour
         }
         else
         {
+            ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
             playerMovement.collidedStop = false;
