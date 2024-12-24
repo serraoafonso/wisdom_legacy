@@ -13,6 +13,10 @@ public class ScienceFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
 
+    public GameObject finalCanvas; // Canvas final
+    public GameObject scienceBook; // Objeto associado ao quiz (ex.: livro de ciência)
+    public PlayerMovement playerMovement; // Referência ao script de movimento do jogador
+
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
     private List<int> questionIndexes;
@@ -61,6 +65,12 @@ public class ScienceFinalManager : MonoBehaviour
         ShuffleQuestions();
         correctAnswersCount = 0; // Reseta contador de respostas corretas seguidas
         LoadQuestion();
+
+        // Desativa o movimento do jogador enquanto o quiz está ativo
+        if (playerMovement != null)
+        {
+            playerMovement.collidedStop = true;
+        }
     }
 
     private void ShuffleQuestions()
@@ -118,7 +128,7 @@ public class ScienceFinalManager : MonoBehaviour
             audioSource.PlayOneShot(correctSound);
             if (correctAnswersCount >= 3)
             {
-                Victory();
+                EndQuiz();
                 return;
             }
         }
@@ -132,9 +142,41 @@ public class ScienceFinalManager : MonoBehaviour
         LoadQuestion();
     }
 
-    private void Victory()
+    private void EndQuiz()
     {
+        // Finaliza o quiz
         quizPanel.SetActive(false);
         victoryPanel.SetActive(true);
+
+        // Reativa o movimento do jogador
+        if (playerMovement != null)
+        {
+            playerMovement.collidedStop = false;
+        }
+
+        // Desativa o colisor do objeto associado ao quiz (ex.: livro)
+        DisableBookCollider(scienceBook);
+    }
+
+    private void DisableBookCollider(GameObject book)
+    {
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false; // Desativa o Box Collider 2D
+            }
+
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Define o corpo como dinâmico
+                bookRigidbody.gravityScale = 10;
+            }
+
+            Destroy(book, 5); // Destroi o objeto após 5 segundos
+        }
     }
 }

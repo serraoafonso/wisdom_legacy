@@ -19,6 +19,9 @@ public class FinanceQuizManager : MonoBehaviour
     [SerializeField] private GhostText ghostText;
     public PlayerMovement playerMovement; // Referência ao script PlayerMovement
     public GameObject book1; // Referência ao objeto do livro
+    public GameObject book2; // Referência ao objeto do livro
+    public GameObject book3; // Referência ao objeto do livro
+    public GameObject book4; // Referência ao objeto do livro
     public GameObject player; // Referência ao jogador
 
     private int currentFactIndex;
@@ -117,11 +120,16 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void AnswerSelected(bool isCorrect)
     {
+        Vector3 playerPosition = player.transform.position;
+        GameObject targetBook = DetermineBookBasedOnPlayerPosition();
         if (isCorrect)
         {
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
-            DisableBookCollider(book1);
+            if (targetBook != null)
+            {
+                DisableBookCollider(targetBook); // Alterar o estado do livro correspondente
+            }
             Canva.SetActive(false);
             playerMovement.collidedStop = false;
         }
@@ -134,13 +142,44 @@ public class FinanceQuizManager : MonoBehaviour
             Canva.SetActive(false);
             if (player != null)
             {
-                player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Reposicionar jogador
-                Debug.Log("Jogador reposicionado para a posição inicial.");
+                if (playerPosition.y < 10)
+                {
+                    player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Reposicionar jogador
+                    Debug.Log("Jogador reposicionado para a posição inicial.");
+                }
+                else
+                {
+                    player.transform.position = new Vector3(-50, 56.5f, player.transform.position.z); // Reposicionar jogador
+                    Debug.Log("Jogador reposicionado para a posição inicial.");
+                }
             }
         }
 
         audioSource.Play();
         DisplayRandomFact();
+    }
+
+
+    private GameObject DetermineBookBasedOnPlayerPosition()
+    {
+        Vector3 playerPosition = player.transform.position;
+
+        if (playerPosition.y < 10) // Exemplo de condição
+        {
+            return book1;
+        }
+        else if (playerPosition.x >= -60)
+        {
+            return book2;
+        }
+        else if (playerPosition.x >= -80)
+        {
+            return book3;
+        }
+        else
+        {
+            return book4;
+        }
     }
 
     private void DisableBookCollider(GameObject book)

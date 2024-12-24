@@ -13,6 +13,10 @@ public class FinanceFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
 
+    public GameObject finalCanvas; // Canvas final
+    public GameObject book1; // Referência ao objeto do livro ou similar
+    public PlayerMovement playerMovement; // Referência ao script de movimento do jogador
+
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
     private List<int> questionIndexes;
@@ -61,6 +65,12 @@ public class FinanceFinalManager : MonoBehaviour
         ShuffleQuestions();
         correctAnswersCount = 0; // Reseta contador de respostas corretas seguidas
         LoadQuestion();
+
+        // Desativa o movimento do jogador enquanto o quiz está ativo
+        if (playerMovement != null)
+        {
+            playerMovement.collidedStop = true;
+        }
     }
 
     private void ShuffleQuestions()
@@ -118,7 +128,9 @@ public class FinanceFinalManager : MonoBehaviour
             audioSource.PlayOneShot(correctSound);
             if (correctAnswersCount >= 3)
             {
-                Victory();
+                DisableBookCollider(book1); // Desativa o livro
+                playerMovement.collidedStop = false; // Reativa o movimento do jogador
+                finalCanvas.SetActive(false); // Fecha o canvas final
                 return;
             }
         }
@@ -132,9 +144,39 @@ public class FinanceFinalManager : MonoBehaviour
         LoadQuestion();
     }
 
-    private void Victory()
+    private void DisableBookCollider(GameObject book)
     {
-        quizPanel.SetActive(false);
-        victoryPanel.SetActive(true);
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false; // Desativa o Box Collider 2D
+                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+            }
+            else
+            {
+                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+            }
+
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Define o corpo como dinâmico
+                bookRigidbody.gravityScale = 10;
+                Debug.Log($"Rigidbody2D do livro {book.name} definido como dinâmico.");
+            }
+            else
+            {
+                Debug.LogWarning($"Rigidbody2D não encontrado no livro {book.name}.");
+            }
+
+            Destroy(book, 5); // Destroi o livro após 5 segundos
+        }
+        else
+        {
+            Debug.LogWarning($"Livro não encontrado.");
+        }
     }
 }

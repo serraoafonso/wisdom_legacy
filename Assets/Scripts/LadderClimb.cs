@@ -3,7 +3,9 @@ using UnityEngine;
 public class LadderClimb : MonoBehaviour
 {
     public float climbSpeed = 3f; // Velocidade de subida
+    public float jumpForce = 5f; // Força do salto
     private bool isClimbing = false; // Se o jogador está na escada
+    private bool canJumpAtTop = false; // Se o jogador pode saltar no topo da escada
     private Rigidbody2D rb; // Referência ao Rigidbody2D do jogador
 
     void Start()
@@ -24,6 +26,12 @@ public class LadderClimb : MonoBehaviour
 
             // Desativa a gravidade enquanto estiver subindo a escada
             rb.gravityScale = 0;
+
+            // Detecta se o jogador está no topo da escada e pressionou o botão de salto
+            if (verticalInput > 0 && canJumpAtTop && Input.GetButtonDown("Jump"))
+            {
+                JumpAtTop();
+            }
         }
     }
 
@@ -33,6 +41,12 @@ public class LadderClimb : MonoBehaviour
         if (other.CompareTag("Ladder"))
         {
             isClimbing = true;  // Habilita o comportamento de escalar
+        }
+
+        // Detecta se o jogador chegou ao topo da escada
+        if (other.CompareTag("LadderTop"))
+        {
+            canJumpAtTop = true; // Permite o salto no topo
         }
     }
 
@@ -44,5 +58,19 @@ public class LadderClimb : MonoBehaviour
             isClimbing = false;  // Desabilita o comportamento de escalar
             rb.gravityScale = 1; // Restaura a gravidade normal do jogador
         }
+
+        // Quando o jogador sai do topo da escada
+        if (other.CompareTag("LadderTop"))
+        {
+            canJumpAtTop = false; // Desabilita o salto ao sair do topo
+        }
+    }
+
+    private void JumpAtTop()
+    {
+        // Adiciona força para o salto no topo da escada
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        isClimbing = false; // Desativa o estado de escalada
+        rb.gravityScale = 1; // Restaura a gravidade após o salto
     }
 }
