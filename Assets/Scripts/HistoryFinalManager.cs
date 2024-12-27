@@ -13,6 +13,10 @@ public class HistoryFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
 
+    public GameObject finalCanvas; // Canvas final
+    public GameObject book1; // Referência ao objeto do livro
+    public PlayerMovement playerMovement; // Controle do movimento do jogador
+
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
     private List<int> questionIndexes;
@@ -118,7 +122,9 @@ public class HistoryFinalManager : MonoBehaviour
             audioSource.PlayOneShot(correctSound);
             if (correctAnswersCount >= 3)
             {
-                Victory();
+                playerMovement.collidedStop = false;
+                DisableBookCollider(book1);
+                finalCanvas.SetActive(false);
                 return;
             }
         }
@@ -132,9 +138,39 @@ public class HistoryFinalManager : MonoBehaviour
         LoadQuestion();
     }
 
-    private void Victory()
+    private void DisableBookCollider(GameObject book)
     {
-        quizPanel.SetActive(false);
-        victoryPanel.SetActive(true);
+        if (book != null)
+        {
+            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
+            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+
+            if (bookCollider != null)
+            {
+                bookCollider.enabled = false; // Desativa o Box Collider 2D
+                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+            }
+            else
+            {
+                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+            }
+
+            if (bookRigidbody != null)
+            {
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Define como Dynamic
+                bookRigidbody.gravityScale = 10;
+                Debug.Log($"Rigidbody2D do livro {book.name} alterado para Dynamic.");
+            }
+            else
+            {
+                Debug.LogWarning($"Rigidbody2D não encontrado no livro {book.name}.");
+            }
+
+            Destroy(book, 5);
+        }
+        else
+        {
+            Debug.LogWarning("Livro não encontrado.");
+        }
     }
 }

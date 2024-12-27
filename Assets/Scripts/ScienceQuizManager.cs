@@ -20,6 +20,9 @@ public class ScienceQuizManager : MonoBehaviour
     [SerializeField] private GhostText ghostText;
     public PlayerMovement playerMovement;
     public GameObject book1;
+    public GameObject book2; // Referência ao objeto do livro
+    public GameObject book3; // Referência ao objeto do livro
+    public GameObject book4; // Referência ao objeto do livro
     public GameObject player;
     private int currentFactIndex;
     private List<int> factIndexes;
@@ -122,11 +125,17 @@ public class ScienceQuizManager : MonoBehaviour
 
     private void AnswerSelected(bool isCorrect)
     {
+        Vector3 playerPosition = player.transform.position;
+        GameObject targetBook = DetermineBookBasedOnPlayerPosition(); // Identificar qual livro será alterado
+
         if (isCorrect)
         {
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
-            DisableBookCollider(book1);
+            if (targetBook != null)
+            {
+                DisableBookCollider(targetBook); // Alterar o estado do livro correspondente
+            }
             Canva.SetActive(false);
             playerMovement.collidedStop = false;
         }
@@ -139,8 +148,17 @@ public class ScienceQuizManager : MonoBehaviour
             Canva.SetActive(false);
             if (player != null)
             {
-                player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Alterar posição
-                Debug.Log("Jogador reposicionado para a posição (87.2, -682).");
+                if (playerPosition.y < 10)
+                {
+                    player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Reposicionar jogador
+                    Debug.Log("Jogador reposicionado para a posição inicial.");
+                }
+                else
+                {
+                    player.transform.position = new Vector3(-130, 79, player.transform.position.z); // Reposicionar jogador
+                    Debug.Log("Jogador reposicionado para a posição inicial.");
+                }
+
             }
         }
 
@@ -148,6 +166,27 @@ public class ScienceQuizManager : MonoBehaviour
         DisplayRandomFact();
     }
 
+    private GameObject DetermineBookBasedOnPlayerPosition()
+    {
+        Vector3 playerPosition = player.transform.position;
+
+        if (playerPosition.y < 10) // Exemplo de condição
+        {
+            return book1;
+        }
+        else if (playerPosition.x <= -100)
+        {
+            return book2;
+        }
+        else if (playerPosition.x <= -80)
+        {
+            return book3;
+        }
+        else
+        {
+            return book4;
+        }
+    }
     private void DisableBookCollider(GameObject book)
     {
         if (book != null)
