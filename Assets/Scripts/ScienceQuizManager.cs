@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 
 public class ScienceQuizManager : MonoBehaviour
 {
@@ -112,65 +112,110 @@ public class ScienceQuizManager : MonoBehaviour
         int correctAnswerPosition = Random.Range(0, allAnswers.Count + 1);
         allAnswers.Insert(correctAnswerPosition, correctAnswer);
 
+        // Certifique-se de que temos o mesmo número de botões que respostas
+        if (answerButtons.Length < allAnswers.Count)
+        {
+            Debug.LogError("O número de botões é menor que o número de respostas disponíveis!");
+            return;
+        }
+
         // Configurar botões de resposta
         for (int i = 0; i < answerButtons.Length; i++)
         {
-            answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[i];
-            answerButtons[i].onClick.RemoveAllListeners();
+            if (i < allAnswers.Count)
+            {
+                int buttonIndex = i; // Captura o índice localmente para evitar problemas com closures
 
-            bool isCorrect = (i == correctAnswerPosition);
-            answerButtons[i].onClick.AddListener(() => AnswerSelected(isCorrect));
+                // Configurar o botão com o texto da resposta
+                answerButtons[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[buttonIndex];
+                answerButtons[buttonIndex].onClick.RemoveAllListeners();
+
+                bool isCorrect = (buttonIndex == correctAnswerPosition);
+                answerButtons[buttonIndex].onClick.AddListener(() => AnswerSelected(isCorrect, answerButtons[buttonIndex].gameObject));
+
+                answerButtons[buttonIndex].gameObject.SetActive(true); // Certifique-se de ativar o botão
+            }
+            else
+            {
+                // Desativar botões extras
+                answerButtons[i].gameObject.SetActive(false);
+            }
         }
     }
 
-    private void AnswerSelected(bool isCorrect)
+
+
+    private void AnswerSelected(bool isCorrect, GameObject botao)
     {
         Vector3 playerPosition = player.transform.position;
-        GameObject targetBook = DetermineBookBasedOnPlayerPosition(); // Identificar qual livro será alterado
+        GameObject targetBook = DetermineBookBasedOnPlayerPosition();
 
         if (isCorrect)
         {
+            botao.GetComponent<Image>().color = Color.green; // Indica resposta correta
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
+
             if (targetBook != null)
             {
-                DisableBookCollider(targetBook); // Alterar o estado do livro correspondente
+                DisableBookCollider(targetBook);
             }
-            Canva.SetActive(false);
-            playerMovement.collidedStop = false;
+
+            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
+            StartCoroutine(HandleAnswerFeedback(true, botao));
         }
         else
         {
+            botao.GetComponent<Image>().color = Color.red; // Indica resposta incorreta
             ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
-            playerMovement.collidedStop = false;
-            Canva.SetActive(false);
+
             if (player != null)
             {
+                // Reposiciona o jogador com base na posição Y
                 if (playerPosition.y < 10)
                 {
-                    player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z); // Reposicionar jogador
+                    player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z);
                     Debug.Log("Jogador reposicionado para a posição inicial.");
                 }
                 else
                 {
-                    player.transform.position = new Vector3(-130, 79, player.transform.position.z); // Reposicionar jogador
+                    player.transform.position = new Vector3(-130, 79, player.transform.position.z);
                     Debug.Log("Jogador reposicionado para a posição inicial.");
                 }
-
             }
+
+            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
+            StartCoroutine(HandleAnswerFeedback(false, botao));
         }
 
         audioSource.Play();
+    }
+
+    // Corrotina para atrasar o fechamento do Canvas
+    private IEnumerator HandleAnswerFeedback(bool isCorrect, GameObject botao)
+    {
+        // Aguarda 1 segundo para mostrar a cor e tocar o som
+        yield return new WaitForSeconds(0.2f);
+
+        // Reseta a cor do botão para a cor padrão
+        botao.GetComponent<Image>().color = Color.white;
+
+        // Fecha o Canvas após o feedback
+        Canva.SetActive(false);
+        playerMovement.collidedStop = false;
+
+        // Exibe um novo fato apenas após o feedback
         DisplayRandomFact();
     }
+
 
     private GameObject DetermineBookBasedOnPlayerPosition()
     {
         Vector3 playerPosition = player.transform.position;
 
-        if (playerPosition.y < 10) // Exemplo de condição
+        if (playerPosition.y < 10)
         {
             return book1;
         }
@@ -187,33 +232,35 @@ public class ScienceQuizManager : MonoBehaviour
             return book4;
         }
     }
+
     private void DisableBookCollider(GameObject book)
     {
         if (book != null)
         {
             BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
-
             Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
 
             if (bookCollider != null)
             {
-                bookCollider.enabled = false; // Desativa o Box Collider 2D
+                bookCollider.enabled = false;
                 Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
             }
             else
             {
                 Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
             }
+
             if (bookRigidbody != null)
             {
-                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Set body type to Dynamic
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic;
                 bookRigidbody.gravityScale = 10;
-                Debug.Log($"Rigidbody2D of the book {book.name} set to Dynamic.");
+                Debug.Log($"Rigidbody2D do livro {book.name} definido como Dinâmico.");
             }
             else
             {
-                Debug.LogWarning($"Rigidbody2D not found on the book {book.name}.");
+                Debug.LogWarning($"Rigidbody2D não encontrado no livro {book.name}.");
             }
+
             Destroy(book, 5);
         }
         else
@@ -221,5 +268,4 @@ public class ScienceQuizManager : MonoBehaviour
             Debug.LogWarning($"Livro não encontrado.");
         }
     }
-
 }
