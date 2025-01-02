@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-
+using System.Collections;
 public class FinanceQuizManager : MonoBehaviour
 {
     public TextMeshProUGUI factText; // Texto do fato

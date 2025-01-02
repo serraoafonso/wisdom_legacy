@@ -29,13 +29,13 @@ public class GhostText : MonoBehaviour
             switch (randomCase)
             {
                 case 0:
-                    myText.text = "Pelo menos ganhaste a medalha de participa��o.";
+                    myText.text = "Pelo menos ganhaste a medalha de participação.";
                     break;
                 case 1:
-                    myText.text = "N�o te preocupes, perder faz parte do jogo... mas tu est�s te especializando!";
+                    myText.text = "Não te preocupes, perder faz parte do jogo... mas tu estás te especializando!";
                     break;
                 case 2:
-                    myText.text = "Quem precisa de vit�ria quando se tem tanta criatividade na hora de perder?";
+                    myText.text = "Quem precisa de vitória quando se tem tanta criatividade na hora de perder?";
                     break;
             }
 
