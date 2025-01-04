@@ -29,50 +29,72 @@ public class HistoryQuizManager : MonoBehaviour
     private List<int> factIndexes;
 
     private string[] historyFacts = {
-        "O Renascimento foi um movimento cultural que ocorreu na Europa entre os séculos XIV e XVII, caracterizado pelo ressurgimento das artes, ciências e do pensamento humanista.",
-        "A Revolução Francesa, que começou em 1789, foi um marco que derrubou a monarquia absolutista na França, resultando em profundas mudanças sociais e políticas.",
-        "A Guerra Civil Americana (1861-1865) foi um conflito entre os estados do Norte e do Sul dos EUA, em grande parte devido à questão da escravidão e à luta pela preservação da União.",
-        "A Primeira Guerra Mundial (1914-1918) envolveu grandes potências mundiais e resultou em milhões de mortos, além de mudanças significativas no mapa político da Europa.",
-        "A Era das Grandes Navegações, entre os séculos XV e XVII, foi um período de expansão marítima europeia que levou à descoberta de novas rotas e territórios ao redor do mundo.",
-        "A criação da Organização das Nações Unidas (ONU) em 1945 teve como objetivo promover a paz e a cooperação internacional após a devastação da Segunda Guerra Mundial."
-    };
+    "O Renascimento foi um movimento cultural que ocorreu na Europa entre os séculos XIV e XVII, caracterizado pelo ressurgimento das artes, ciências e do pensamento humanista.",
+    "A Revolução Francesa, que começou em 1789, foi um marco que derrubou a monarquia absolutista na França, resultando em profundas mudanças sociais e políticas.",
+    "A Guerra Civil Americana (1861-1865) foi um conflito entre os estados do Norte e do Sul dos EUA, em grande parte devido à questão da escravidão e à luta pela preservação da União.",
+    "A Primeira Guerra Mundial (1914-1918) envolveu grandes potências mundiais e resultou em milhões de mortos, além de mudanças significativas no mapa político da Europa.",
+    "A Era das Grandes Navegações, entre os séculos XV e XVII, foi um período de expansão marítima europeia que levou à descoberta de novas rotas e territórios ao redor do mundo.",
+    "A criação da Organização das Nações Unidas (ONU) em 1945 teve como objetivo promover a paz e a cooperação internacional após a devastação da Segunda Guerra Mundial.",
+    "A Revolução Industrial, que começou no século XVIII, transformou a economia mundial com o surgimento de máquinas e fábricas, promovendo urbanização e inovação tecnológica.",
+    "A Declaração de Independência dos Estados Unidos foi assinada em 1776, marcando a separação oficial das Treze Colônias do domínio britânico.",
+    "A Segunda Guerra Mundial (1939-1945) foi um conflito global que envolveu as principais potências mundiais e levou à divisão do mundo entre blocos ideológicos.",
+    "O Tratado de Versalhes, assinado em 1919, marcou o fim oficial da Primeira Guerra Mundial, impondo condições severas à Alemanha.",
+    "O Império Romano foi uma das civilizações mais influentes da história, deixando um legado em áreas como direito, engenharia e cultura."
+};
 
     private string[] historyQuestions = {
-        "Qual foi o impacto cultural do Renascimento na Europa?",
-        "Quais foram algumas das principais consequências da Revolução Francesa?",
-        "Qual foi a causa central da Guerra Civil Americana?",
-        "Qual foi o principal resultado da Primeira Guerra Mundial para o mapa político europeu?",
-        "Qual era o principal objetivo da Era das Grandes Navegações?",
-        "Por que foi criada a ONU em 1945?"
-    };
+    "Qual foi o impacto cultural do Renascimento na Europa?",
+    "Quais foram algumas das principais consequências da Revolução Francesa?",
+    "Qual foi a causa central da Guerra Civil Americana?",
+    "Qual foi o principal resultado da Primeira Guerra Mundial para o mapa político europeu?",
+    "Qual era o principal objetivo da Era das Grandes Navegações?",
+    "Por que foi criada a ONU em 1945?",
+    "Qual foi o impacto da Revolução Industrial no mundo?",
+    "O que representou a assinatura da Declaração de Independência dos Estados Unidos?",
+    "Quais foram as principais consequências da Segunda Guerra Mundial?",
+    "O que foi o Tratado de Versalhes e qual foi seu impacto na Alemanha?",
+    "Qual foi o legado mais duradouro do Império Romano?"
+};
 
     private string[] correctAnswers = {
-        "Ressurgimento das artes e ciências e fortalecimento do pensamento humanista.",
-        "Derrubada da monarquia e estabelecimento de princípios de igualdade e liberdade.",
-        "Conflito entre estados do Norte e do Sul sobre a questão da escravidão e a preservação da União.",
-        "Mudanças significativas nas fronteiras europeias e o enfraquecimento de impérios tradicionais.",
-        "Descobrir novas rotas e territórios para expandir o comércio e a influência europeia.",
-        "Promover a paz e a cooperação internacional após a Segunda Guerra Mundial."
-    };
+    "Ressurgimento das artes e ciências e fortalecimento do pensamento humanista.",
+    "Derrubada da monarquia e estabelecimento de princípios de igualdade e liberdade.",
+    "Conflito entre estados do Norte e do Sul sobre a questão da escravidão e a preservação da União.",
+    "Mudanças significativas nas fronteiras europeias e o enfraquecimento de impérios tradicionais.",
+    "Descobrir novas rotas e territórios para expandir o comércio e a influência europeia.",
+    "Promover a paz e a cooperação internacional após a Segunda Guerra Mundial.",
+    "Transformou a economia mundial, promovendo urbanização, inovação e o surgimento de fábricas.",
+    "A separação oficial das Treze Colônias do domínio britânico e a formação de uma nação independente.",
+    "A divisão do mundo entre blocos ideológicos e a reconstrução de países devastados pelo conflito.",
+    "Imposição de condições severas à Alemanha, que contribuiu para tensões políticas futuras.",
+    "Legado em áreas como direito, engenharia, arquitetura e cultura que influenciam até hoje."
+};
 
     private string[][] incorrectAnswers = new string[][] {
-        new string[] { "Declínio do interesse em ciências e artes, com foco exclusivo em religião.", "Expansão da monarquia absoluta na Europa." },
-        new string[] { "Fortalecimento da monarquia na França.", "Criação de uma aliança entre França e Inglaterra contra a Áustria." },
-        new string[] { "Questões territoriais com o México.", "Conflito religioso entre estados do Norte e do Sul dos EUA." },
-        new string[] { "Unificação completa dos países europeus sob um governo único.", "Expansão do império alemão sobre toda a Europa Ocidental." },
-        new string[] { "Exploração de minas de ouro no continente africano.", "Conquista e colonização da Ásia exclusivamente." },
-        new string[] { "Promover a divisão dos territórios coloniais da Europa.", "Organizar o comércio internacional e a exploração econômica global." }
-    };
+    new string[] { "Declínio do interesse em ciências e artes, com foco exclusivo em religião.", "Expansão da monarquia absoluta na Europa." },
+    new string[] { "Fortalecimento da monarquia na França.", "Criação de uma aliança entre França e Inglaterra contra a Áustria." },
+    new string[] { "Questões territoriais com o México.", "Conflito religioso entre estados do Norte e do Sul dos EUA." },
+    new string[] { "Unificação completa dos países europeus sob um governo único.", "Expansão do império alemão sobre toda a Europa Ocidental." },
+    new string[] { "Exploração de minas de ouro no continente africano.", "Conquista e colonização da Ásia exclusivamente." },
+    new string[] { "Promover a divisão dos territórios coloniais da Europa.", "Organizar o comércio internacional e a exploração econômica global." },
+    new string[] { "Reduziu a inovação tecnológica e aumentou a dependência de trabalho manual.", "Teve impacto apenas na Europa, sem influenciar outras partes do mundo." },
+    new string[] { "A submissão das colônias aos interesses britânicos.", "O início de uma nova aliança entre as Treze Colônias e a Inglaterra." },
+    new string[] { "A unificação imediata de todas as nações sob um governo global.", "O fortalecimento dos impérios europeus em todo o mundo." },
+    new string[] { "A restauração da monarquia alemã após a guerra.", "Uma aliança entre França e Alemanha para reconstrução econômica." },
+    new string[] { "Impacto limitado à península Itálica, sem influenciar outras civilizações.", "Apenas conquistas militares, sem legado cultural ou jurídico." }
+};
+
 
     private void Start()
     {
         InitializeFactIndexes();
         DisplayRandomFact();
+        audioSource.clip = null;
     }
 
     private void InitializeFactIndexes()
     {
-        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5 }; // Índices para selecionar perguntas não repetidas
+        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // Índices para selecionar perguntas não repetidas
     }
 
     private void DisplayRandomFact()

@@ -28,50 +28,72 @@ public class FinanceQuizManager : MonoBehaviour
     private List<int> factIndexes;
 
     private string[] financeFacts = {
-        "A poupança é o ato de guardar parte da renda para uso futuro, criando uma base financeira para imprevistos e objetivos de longo prazo.",
-        "Planejar a aposentadoria é essencial para garantir uma fonte de renda no futuro, normalmente através de contribuições para planos de previdência pública e privada.",
-        "O IRS (Imposto sobre o Rendimento das Pessoas Singulares) é um tributo cobrado em Portugal sobre os rendimentos de pessoas físicas, variando conforme a faixa de renda anual.",
-        "O cartão de crédito permite compras e pagamentos a prazo, mas os juros cobrados por atrasos no pagamento podem ser muito elevados.",
-        "O empréstimo estudantil permite que estudantes financiem sua educação e paguem o valor emprestado posteriormente, geralmente com juros baixos e prazos flexíveis.",
-        "Definir objetivos financeiros claros, como comprar uma casa ou pagar dívidas, ajuda a direcionar o planejamento financeiro e a alcançar metas."
-    };
+    "A poupança é o ato de guardar parte da renda para uso futuro, criando uma base financeira para imprevistos e objetivos de longo prazo.",
+    "Planejar a aposentadoria é essencial para garantir uma fonte de renda no futuro, normalmente através de contribuições para planos de previdência pública e privada.",
+    "O IRS (Imposto sobre o Rendimento das Pessoas Singulares) é um tributo cobrado em Portugal sobre os rendimentos de pessoas físicas, variando conforme a faixa de renda anual.",
+    "O cartão de crédito permite compras e pagamentos a prazo, mas os juros cobrados por atrasos no pagamento podem ser muito elevados.",
+    "O empréstimo estudantil permite que estudantes financiem sua educação e paguem o valor emprestado posteriormente, geralmente com juros baixos e prazos flexíveis.",
+    "Definir objetivos financeiros claros, como comprar uma casa ou pagar dívidas, ajuda a direcionar o planejamento financeiro e a alcançar metas.",
+    "Diversificar investimentos reduz riscos e aumenta a estabilidade financeira, espalhando o capital entre diferentes ativos.",
+    "Um fundo de emergência deve ter pelo menos 3 a 6 meses de despesas básicas para lidar com imprevistos financeiros.",
+    "O endividamento excessivo pode prejudicar a saúde financeira, limitando a capacidade de investir e economizar.",
+    "Investir em ações permite aos investidores obter lucros com o crescimento de empresas, mas envolve riscos maiores do que outros investimentos.",
+    "Um orçamento mensal é uma ferramenta fundamental para monitorar receitas e despesas, ajudando a evitar dívidas e a alcançar metas financeiras."
+};
 
     private string[] financeQuestions = {
-        "Qual é a principal vantagem de poupar parte da renda mensal?",
-        "Por que é importante planejar a aposentadoria desde cedo?",
-        "Para que serve o IRS (Imposto sobre o Rendimento das Pessoas Singulares) em Portugal?",
-        "Qual é uma das principais desvantagens do cartão de crédito?",
-        "Qual é o propósito de um empréstimo estudantil?",
-        "Como definir objetivos financeiros ajuda no planejamento pessoal?"
-    };
+    "Qual é a principal vantagem de poupar parte da renda mensal?",
+    "Por que é importante planejar a aposentadoria desde cedo?",
+    "Para que serve o IRS (Imposto sobre o Rendimento das Pessoas Singulares) em Portugal?",
+    "Qual é uma das principais desvantagens do cartão de crédito?",
+    "Qual é o propósito de um empréstimo estudantil?",
+    "Como definir objetivos financeiros ajuda no planejamento pessoal?",
+    "Por que é importante diversificar os investimentos?",
+    "Qual é o objetivo principal de um fundo de emergência?",
+    "Quais são os impactos do endividamento excessivo na saúde financeira?",
+    "Quais são as vantagens e os riscos de investir em ações?",
+    "Qual é o principal benefício de criar um orçamento mensal?"
+};
 
     private string[] correctAnswers = {
-        "Cria uma base financeira para imprevistos e para realizar objetivos de longo prazo.",
-        "Para garantir uma fonte de renda no futuro e manter o padrão de vida desejado.",
-        "É um tributo obrigatório que financia serviços públicos e funciona conforme a faixa de renda anual da pessoa.",
-        "Juros elevados em caso de atrasos, podendo gerar dívidas difíceis de quitar.",
-        "Permite financiar a educação e pagar o valor emprestado com condições facilitadas.",
-        "Ajuda a direcionar o planejamento financeiro e alcançar metas específicas."
-    };
+    "Cria uma base financeira para imprevistos e para realizar objetivos de longo prazo.",
+    "Para garantir uma fonte de renda no futuro e manter o padrão de vida desejado.",
+    "É um tributo obrigatório que financia serviços públicos e funciona conforme a faixa de renda anual da pessoa.",
+    "Juros elevados em caso de atrasos, podendo gerar dívidas difíceis de quitar.",
+    "Permite financiar a educação e pagar o valor emprestado com condições facilitadas.",
+    "Ajuda a direcionar o planejamento financeiro e alcançar metas específicas.",
+    "Para reduzir riscos financeiros e aumentar a estabilidade ao espalhar o capital entre diferentes ativos.",
+    "Ter recursos suficientes para lidar com emergências sem recorrer a dívidas.",
+    "Limita a capacidade de economizar e investir, além de gerar dificuldades financeiras a longo prazo.",
+    "Permite lucrar com o crescimento de empresas, mas envolve maior risco de perda de capital.",
+    "Ajuda a monitorar receitas e despesas, evitando dívidas e alcançando metas financeiras."
+};
 
     private string[][] incorrectAnswers = new string[][] {
-        new string[] { "É um recurso opcional, sem grande impacto no futuro financeiro.", "Serve apenas para gastar em viagens e lazer." },
-        new string[] { "Para aumentar a quantidade de gastos na juventude.", "Para garantir benefícios como férias prolongadas na aposentadoria." },
-        new string[] { "Para diminuir os custos de bens e serviços pessoais.", "Para ajudar exclusivamente no financiamento de dívidas pessoais." },
-        new string[] { "Possibilidade de acumular recompensas de fidelidade.", "Melhorar o crédito sem custos extras, mesmo com atrasos." },
-        new string[] { "Servir como apoio de curto prazo para despesas pessoais.", "Cobrir apenas materiais e despesas de lazer dos estudantes." },
-        new string[] { "Permite focar mais em compras de alto valor e bens de luxo.", "Faz com que o planejamento se torne mais restritivo e limitado." }
-    };
+    new string[] { "É um recurso opcional, sem grande impacto no futuro financeiro.", "Serve apenas para gastar em viagens e lazer." },
+    new string[] { "Para aumentar a quantidade de gastos na juventude.", "Para garantir benefícios como férias prolongadas na aposentadoria." },
+    new string[] { "Para diminuir os custos de bens e serviços pessoais.", "Para ajudar exclusivamente no financiamento de dívidas pessoais." },
+    new string[] { "Possibilidade de acumular recompensas de fidelidade.", "Melhorar o crédito sem custos extras, mesmo com atrasos." },
+    new string[] { "Servir como apoio de curto prazo para despesas pessoais.", "Cobrir apenas materiais e despesas de lazer dos estudantes." },
+    new string[] { "Permite focar mais em compras de alto valor e bens de luxo.", "Faz com que o planejamento se torne mais restritivo e limitado." },
+    new string[] { "Para garantir lucros elevados em todos os ativos.", "Para eliminar a necessidade de um fundo de emergência." },
+    new string[] { "Aumentar o número de investimentos de risco.", "Garantir conforto financeiro apenas em curto prazo." },
+    new string[] { "Melhora a capacidade de poupar para o futuro.", "Facilita a obtenção de crédito com juros baixos." },
+    new string[] { "É totalmente seguro e garante lucros fixos.", "Não requer análise de mercado para tomar decisões." },
+    new string[] { "Permite gastar sem restrições mensais.", "Facilita o endividamento ao longo do tempo." }
+};
+
 
     private void Start()
     {
         InitializeFactIndexes();
         DisplayRandomFact();
+        audioSource.clip = null;
     }
 
     private void InitializeFactIndexes()
     {
-        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5 }; // Índices para controle de exibição de fatos/perguntas
+        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // Índices para controle de exibição de fatos/perguntas
     }
 
     private void DisplayRandomFact()
