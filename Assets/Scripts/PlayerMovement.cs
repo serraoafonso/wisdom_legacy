@@ -5,16 +5,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float speedJump;
     private Rigidbody2D body;
-   
     private Animator anim;
     private Vector2 initialScale;
     public bool collidedStop;
     private bool grounded;
+
+    public AudioSource footstepsSound;
     private void Awake()
     {
         //Grabs references for rigidbody and animator from game object.
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
         initialScale = transform.localScale;
 
     }
@@ -27,10 +29,30 @@ public class PlayerMovement : MonoBehaviour
 
         //Flip player when facing left/right.
         if (horizontalInput > 0.01f)
-            transform.localScale = new Vector2(initialScale.x*-1, initialScale.y);
+        {
+            transform.localScale = new Vector2(initialScale.x * -1, initialScale.y);
+            
+        }
+
 
         else if (horizontalInput < -0.01f)
+        {
             transform.localScale = initialScale;
+            
+
+        }
+
+        if (Mathf.Abs(horizontalInput) > 0.01f && grounded) // Player is moving and grounded
+        {
+            if (!footstepsSound.isPlaying) // Prevent restarting the sound if it's already playing
+            {
+                footstepsSound.Play();
+            }
+        }
+        else // Player is stationary or not grounded
+        {
+            footstepsSound.Stop();
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) == true && grounded == true)
         {
