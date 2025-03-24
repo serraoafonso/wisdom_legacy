@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scripts/quizScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/projeto.unity
     guid: 43b29c57def622c4da738da911fbd430
+  - enabled: 1
+    path: Assets/Scripts/quizScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
