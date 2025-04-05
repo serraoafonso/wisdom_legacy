@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LadderClimb : MonoBehaviour
 {
-    public float climbSpeed = 3f; // Velocidade de subida
+    public float climbSpeed = 6f; // Velocidade de subida
     public float jumpForce = 5f; // Força do salto
     private bool isClimbing = false; // Se o jogador está na escada
     private bool canJumpAtTop = false; // Se o jogador pode saltar no topo da escada
