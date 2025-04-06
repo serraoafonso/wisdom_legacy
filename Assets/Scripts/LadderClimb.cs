@@ -56,7 +56,7 @@ public class LadderClimb : MonoBehaviour
         if (other.CompareTag("Ladder"))
         {
             isClimbing = false;  // Desabilita o comportamento de escalar
-            rb.gravityScale = 1; // Restaura a gravidade normal do jogador
+            rb.gravityScale = 4; // Restaura a gravidade normal do jogador
         }
 
         // Quando o jogador sai do topo da escada
@@ -71,6 +71,6 @@ public class LadderClimb : MonoBehaviour
         // Adiciona força para o salto no topo da escada
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         isClimbing = false; // Desativa o estado de escalada
-        rb.gravityScale = 1; // Restaura a gravidade após o salto
+        rb.gravityScale = 4; // Restaura a gravidade após o salto
     }
 }
