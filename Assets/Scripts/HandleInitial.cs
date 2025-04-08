@@ -11,6 +11,7 @@ public class HandleInitial : MonoBehaviour
 
     public GameObject initialCanvas;
     public GameObject initialScreen;
+    public GameObject CreditsCanvas;
     public Button ButtonJogar;
     public Button ButtonCredits;
 
@@ -22,9 +23,15 @@ public class HandleInitial : MonoBehaviour
 
     public void OnButtonJogarClicked()
     {
-        Console.WriteLine("ahhahahah");
         initialCanvas.SetActive(true);
         initialScreen.SetActive(false);
+    }
+
+    public void OnButtonCreditsClicked()
+    {
+        CreditsCanvas.SetActive(true);
+        initialScreen.SetActive(false); 
+     
     }
 
     // Update is called once per frame
