@@ -15,6 +15,8 @@ public class ScienceQuizManager : MonoBehaviour
     public GameObject factPanel; // Painel do fato
     public GameObject questionPanel; // Painel da pergunta
     public TextMeshProUGUI themeText;
+    public TextMeshProUGUI sciencePointsText;
+    public int points;
     public GameObject Canva;
 
     [SerializeField] private GhostText ghostText;
@@ -86,6 +88,7 @@ public class ScienceQuizManager : MonoBehaviour
 
     private void Start()
     {
+        points = int.Parse(sciencePointsText.text);
         InitializeFactIndexes();
         DisplayRandomFact();
 
@@ -183,6 +186,8 @@ public class ScienceQuizManager : MonoBehaviour
                 DisableBookCollider(targetBook);
             }
 
+            points++;
+            sciencePointsText.text = points.ToString();
             // Mantém o Canvas ativo por um tempo para mostrar a cor/som
             StartCoroutine(HandleAnswerFeedback(true, botao));
         }
@@ -192,6 +197,18 @@ public class ScienceQuizManager : MonoBehaviour
             ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
+
+            if (points > 0)
+            {
+                points--;
+
+            }
+            else
+            {
+                points = 0;
+            }
+
+            sciencePointsText.text = points.ToString();
 
             if (player != null)
             {

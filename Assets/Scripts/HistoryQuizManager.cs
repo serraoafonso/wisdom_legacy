@@ -15,6 +15,8 @@ public class HistoryQuizManager : MonoBehaviour
     public GameObject factPanel; // Painel que exibe o fato histórico
     public GameObject questionPanel; // Painel que exibe a pergunta
     public TextMeshProUGUI themeText;
+    public TextMeshProUGUI HistoryPointsText;
+    public int points;
     public GameObject Canva; // Painel para controle adicional
 
     [SerializeField] private GhostText ghostText;
@@ -87,6 +89,7 @@ public class HistoryQuizManager : MonoBehaviour
 
     private void Start()
     {
+        points = int.Parse(HistoryPointsText.text);
         InitializeFactIndexes();
         DisplayRandomFact();
         audioSource.clip = null;
@@ -183,6 +186,8 @@ public class HistoryQuizManager : MonoBehaviour
             {
                 DisableBookCollider(targetBook);
             }
+            points++;
+            HistoryPointsText.text = points.ToString();
 
             // Mantém o Canvas ativo por um tempo para mostrar a cor/som
             StartCoroutine(HandleAnswerFeedback(true, botao));
@@ -193,6 +198,18 @@ public class HistoryQuizManager : MonoBehaviour
             ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
+
+            if (points > 0)
+            {
+                points--;
+
+            }
+            else
+            {
+                points = 0;
+            }
+
+            HistoryPointsText.text = points.ToString();
 
             if (player != null)
             {
