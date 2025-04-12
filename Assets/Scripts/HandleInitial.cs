@@ -14,6 +14,7 @@ public class HandleInitial : MonoBehaviour
     public GameObject CreditsCanvas;
     public GameObject StoreScreen;
     public GameObject NextSteps;
+    public GameObject LastCanvas;
 
 
     // Start is called before the first frame update
@@ -45,6 +46,12 @@ public class HandleInitial : MonoBehaviour
     {
         NextSteps.SetActive(true);
         initialScreen.SetActive(false);
+    }
+
+    public void OnButtonEndClicked()
+    {
+        LastCanvas.SetActive(false);
+        initialScreen.SetActive(true);
     }
 
     // Update is called once per frame
