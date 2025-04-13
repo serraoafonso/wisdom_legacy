@@ -19,6 +19,9 @@ public class HandleWarning : MonoBehaviour
 
     public void onButtonLeaveClicked()
     {
+        GameData.financePoints = 0;
+        GameData.sciencePoints = 0;
+        GameData.historyPoints = 0;
         WarningCanvas.SetActive(false);
         initialScreen.SetActive(true);
     }

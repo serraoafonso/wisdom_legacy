@@ -13,7 +13,6 @@ public class HistoryFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
     public TextMeshProUGUI HistoryPointsText;
-    public int points;
 
     public GameObject finalCanvas; // Canvas final
     public GameObject book1; // Referência ao objeto do livro
@@ -68,7 +67,6 @@ public class HistoryFinalManager : MonoBehaviour
 
     private void Start()
     {
-        points = int.Parse(HistoryPointsText.text);
         StartQuiz();
     }
 
@@ -139,30 +137,30 @@ public class HistoryFinalManager : MonoBehaviour
             correctAnswersCount++;
             audioSource.PlayOneShot(correctSound);
 
-            points++;
-            HistoryPointsText.text = points.ToString();
+            GameData.historyPoints++;
+            HistoryPointsText.text = GameData.historyPoints.ToString();
             if (correctAnswersCount >= 3)
             {
                 playerMovement.collidedStop = false;
                 DisableBookCollider(book1);
                 finalCanvas.SetActive(false);
-                points += 3;
-                HistoryPointsText.text = points.ToString();
+                GameData.historyPoints += 3;
+                HistoryPointsText.text = GameData.historyPoints.ToString();
                 return;
             }
         }
         else
         {
-            if (points > 1)
+            if (GameData.historyPoints > 1)
             {
-                points -= 2;
+                GameData.historyPoints -= 2;
 
             }
             else
             {
-                points = 0;
+                GameData.historyPoints = 0;
             }
-            HistoryPointsText.text = points.ToString();
+            HistoryPointsText.text = GameData.historyPoints.ToString();
             audioSource.PlayOneShot(incorrectSound);
             correctAnswersCount = 0; // Reinicia contagem de respostas corretas seguidas
             StartQuiz(); // Reinicia o quiz

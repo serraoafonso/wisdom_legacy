@@ -15,7 +15,6 @@ public class FinanceQuizManager : MonoBehaviour
     public GameObject questionPanel; // Painel da pergunta
     public TextMeshProUGUI themeText;
     public TextMeshProUGUI FinancePointsText;
-    public int points;
     public GameObject Canva; // Painel para controle adicional
 
     [SerializeField] private GhostText ghostText;
@@ -88,7 +87,6 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void Start()
     {
-        points = int.Parse(FinancePointsText.text);
         InitializeFactIndexes();
         DisplayRandomFact();
         audioSource.clip = null;
@@ -185,8 +183,8 @@ public class FinanceQuizManager : MonoBehaviour
             {
                 DisableBookCollider(targetBook);
             }
-            points++;
-            FinancePointsText.text = points.ToString();
+            GameData.financePoints++;
+            FinancePointsText.text = GameData.financePoints.ToString();
             // Mantém o Canvas ativo por um tempo para mostrar a cor/som
             StartCoroutine(HandleAnswerFeedback(true, botao));
         }
@@ -196,17 +194,17 @@ public class FinanceQuizManager : MonoBehaviour
             ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
-            if(points > 0)
+            if(GameData.financePoints > 0)
             {
-                points--;
+                GameData.financePoints--;
 
             }
             else
             {
-                points = 0;
+                GameData.financePoints = 0;
             }
             
-            FinancePointsText.text = points.ToString();
+            FinancePointsText.text = GameData.financePoints.ToString();
 
             if (player != null)
             {

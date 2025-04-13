@@ -13,7 +13,6 @@ public class ScienceFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
     public TextMeshProUGUI sciencePointsText;
-    public int points;
 
     public GameObject finalCanvas; // Canvas final
     public GameObject scienceBook; // Objeto associado ao quiz (ex.: livro de ciência)
@@ -68,7 +67,6 @@ public class ScienceFinalManager : MonoBehaviour
 
     private void Start()
     {
-        points = int.Parse(sciencePointsText.text);
         StartQuiz();
     }
 
@@ -145,8 +143,8 @@ public class ScienceFinalManager : MonoBehaviour
             correctAnswersCount++;
             audioSource.PlayOneShot(correctSound);
 
-            points++;
-            sciencePointsText.text = points.ToString();
+            GameData.sciencePoints++;
+            sciencePointsText.text = GameData.sciencePoints.ToString();
             if (correctAnswersCount >= 3)
             {
                 EndQuiz();
@@ -155,16 +153,16 @@ public class ScienceFinalManager : MonoBehaviour
         }
         else
         {
-            if (points > 1)
+            if (GameData.sciencePoints > 1)
             {
-                points -= 2;
+                GameData.sciencePoints -= 2;
 
             }
             else
             {
-                points = 0;
+                GameData.sciencePoints = 0;
             }
-            sciencePointsText.text = points.ToString();
+            sciencePointsText.text = GameData.sciencePoints.ToString();
             audioSource.PlayOneShot(incorrectSound);
             correctAnswersCount = 0; // Reinicia contagem de respostas corretas seguidas
             StartQuiz(); // Reinicia o quiz
@@ -175,13 +173,13 @@ public class ScienceFinalManager : MonoBehaviour
 
     private void EndQuiz()
     {
+        GameData.sciencePoints += 3;
+        sciencePointsText.text = GameData.sciencePoints.ToString();
+        GameData.concluded = true;
         // Finaliza o quiz
         quizPanel.SetActive(false);
         victoryPanel.SetActive(true);
-
-        points += 3;
-        sciencePointsText.text = points.ToString();
-
+      
         // Reativa o movimento do jogador
         if (playerMovement != null)
         {

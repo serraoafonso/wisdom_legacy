@@ -13,7 +13,6 @@ public class FinanceFinalManager : MonoBehaviour
     public GameObject quizPanel; // Painel que exibe a pergunta e opções
     public GameObject victoryPanel; // Painel de vitória
     public TextMeshProUGUI FinancePointsText;
-    public int points;
 
     public GameObject finalCanvas; // Canvas final
     public GameObject book1; // Referência ao objeto do livro ou similar
@@ -68,7 +67,6 @@ public class FinanceFinalManager : MonoBehaviour
 
     private void Start()
     {
-        points = int.Parse(FinancePointsText.text);
         StartQuiz();
     }
 
@@ -145,30 +143,30 @@ public class FinanceFinalManager : MonoBehaviour
             correctAnswersCount++;
             audioSource.PlayOneShot(correctSound);
 
-            points++;
-            FinancePointsText.text = points.ToString();
+            GameData.financePoints++;
+            FinancePointsText.text = GameData.financePoints.ToString();
             if (correctAnswersCount >= 3)
             {
                 DisableBookCollider(book1); // Desativa o livro
                 playerMovement.collidedStop = false; // Reativa o movimento do jogador
                 finalCanvas.SetActive(false); // Fecha o canvas final
-                points += 3;
-                FinancePointsText.text = points.ToString();
+                GameData.financePoints += 3;
+                FinancePointsText.text = GameData.financePoints.ToString();
                 return;
             }
         }
         else
         {
-            if (points > 1)
+            if (GameData.financePoints > 1)
             {
-                points -= 2;
+                GameData.financePoints -= 2;
 
             }
             else
             {
-                points = 0;
+                GameData.financePoints = 0;
             }
-            FinancePointsText.text = points.ToString();
+            FinancePointsText.text = GameData.financePoints.ToString();
             audioSource.PlayOneShot(incorrectSound);
             correctAnswersCount = 0; // Reinicia contagem de respostas corretas seguidas
             StartQuiz(); // Reinicia o quiz
