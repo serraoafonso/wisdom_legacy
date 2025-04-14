@@ -16,7 +16,7 @@ public class HandleOpenLevel : MonoBehaviour
             Image imagem = ButtonLevel1.GetComponent<Image>();
 
             Color cor = imagem.color;
-            cor.a = 0.5f;
+            cor.a = 0.8f;
             imagem.color = cor;
             ButtonLevel1.interactable = false;
         }

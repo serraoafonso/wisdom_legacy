@@ -173,9 +173,10 @@ public class ScienceFinalManager : MonoBehaviour
 
     private void EndQuiz()
     {
+        GameData.concluded = true;
         GameData.sciencePoints += 3;
         sciencePointsText.text = GameData.sciencePoints.ToString();
-        GameData.concluded = true;
+        
         // Finaliza o quiz
         quizPanel.SetActive(false);
         victoryPanel.SetActive(true);
