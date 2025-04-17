@@ -8,6 +8,7 @@ public class HandleStore : MonoBehaviour
     public TextMeshProUGUI sciencePoints;
     public TextMeshProUGUI historyPoints;
     public TextMeshProUGUI financePoints;
+    public TextMeshProUGUI text_soon;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,20 @@ public class HandleStore : MonoBehaviour
         financePoints.text = GameData.financePoints.ToString();
     }
 
+
+    public void onBuyClicked()
+    {
+        StartCoroutine(MostrarMensagemTemporaria());
+    }
+
+    private IEnumerator MostrarMensagemTemporaria()
+    {
+        text_soon.text = "Em breve!";
+
+        yield return new WaitForSeconds(3f);
+
+        text_soon.text = "";
+    }
     // Update is called once per frame
     void Update()
     {
