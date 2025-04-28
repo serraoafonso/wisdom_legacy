@@ -88,9 +88,9 @@ public class HistoryQuizManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource.clip = null;
         InitializeFactIndexes();
         DisplayRandomFact();
-        audioSource.clip = null;
     }
 
     private void InitializeFactIndexes()

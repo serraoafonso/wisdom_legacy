@@ -87,9 +87,9 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource.clip = null;
         InitializeFactIndexes();
         DisplayRandomFact();
-        audioSource.clip = null;
     }
 
     private void InitializeFactIndexes()

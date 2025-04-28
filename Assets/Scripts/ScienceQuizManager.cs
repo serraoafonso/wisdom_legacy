@@ -87,6 +87,7 @@ public class ScienceQuizManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource.clip = null;
         InitializeFactIndexes();
         DisplayRandomFact();
 
