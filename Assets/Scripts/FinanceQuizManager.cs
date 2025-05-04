@@ -3,87 +3,134 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Collections;
+
 public class FinanceQuizManager : MonoBehaviour
 {
-    public TextMeshProUGUI factText; // Texto do fato
-    public TextMeshProUGUI questionText; // Texto da pergunta
-    public Button[] answerButtons; // Botões de resposta
-    public AudioSource audioSource; // AudioSource para tocar os sons
-    public AudioClip correctSound; // Som de acerto
-    public AudioClip incorrectSound; // Som de erro
-    public GameObject factPanel; // Painel do fato
-    public GameObject questionPanel; // Painel da pergunta
+    public TextMeshProUGUI factText;
+    public TextMeshProUGUI questionText;
+    public Button[] answerButtons;
+    public AudioSource audioSource;
+    public AudioClip correctSound;
+    public AudioClip incorrectSound;
+    public GameObject factPanel;
+    public GameObject questionPanel;
     public TextMeshProUGUI themeText;
-    public TextMeshProUGUI FinancePointsText;
-    public GameObject Canva; // Painel para controle adicional
+    public TextMeshProUGUI financePointsText;
+    public GameObject Canva;
 
     [SerializeField] private GhostText ghostText;
-    public PlayerMovement playerMovement; // Referência ao script PlayerMovement
-    public GameObject book1; // Referência ao objeto do livro
-    public GameObject book2; // Referência ao objeto do livro
-    public GameObject book3; // Referência ao objeto do livro
-    public GameObject book4; // Referência ao objeto do livro
-    public GameObject player; // Referência ao jogador
-
+    public PlayerMovement playerMovement;
+    public GameObject book1;
+    public GameObject book2;
+    public GameObject book3;
+    public GameObject book4;
+    public GameObject player;
     private int currentFactIndex;
     private List<int> factIndexes;
 
-    private string[] financeFacts = {
-    "A poupança é o ato de guardar parte da renda para uso futuro, criando uma base financeira para imprevistos e objetivos de longo prazo.",
-    "Planejar a aposentadoria é essencial para garantir uma fonte de renda no futuro, normalmente através de contribuições para planos de previdência pública e privada.",
-    "O IRS (Imposto sobre o Rendimento das Pessoas Singulares) é um tributo cobrado em Portugal sobre os rendimentos de pessoas físicas, variando conforme a faixa de renda anual.",
-    "O cartão de crédito permite compras e pagamentos a prazo, mas os juros cobrados por atrasos no pagamento podem ser muito elevados.",
-    "O empréstimo estudantil permite que estudantes financiem sua educação e paguem o valor emprestado posteriormente, geralmente com juros baixos e prazos flexíveis.",
-    "Definir objetivos financeiros claros, como comprar uma casa ou pagar dívidas, ajuda a direcionar o planejamento financeiro e a alcançar metas.",
-    "Diversificar investimentos reduz riscos e aumenta a estabilidade financeira, espalhando o capital entre diferentes ativos.",
-    "Um fundo de emergência deve ter pelo menos 3 a 6 meses de despesas básicas para lidar com imprevistos financeiros.",
-    "O endividamento excessivo pode prejudicar a saúde financeira, limitando a capacidade de investir e economizar.",
-    "Investir em ações permite aos investidores obter lucros com o crescimento de empresas, mas envolve riscos maiores do que outros investimentos.",
-    "Um orçamento mensal é uma ferramenta fundamental para monitorar receitas e despesas, ajudando a evitar dívidas e a alcançar metas financeiras."
-};
+    private string[] financeFactsPT = {
+        "O orçamento nacional é um plano financeiro do governo que envolve as receitas e despesas do país.",
+        "A inflação é o aumento generalizado dos preços de bens e serviços em uma economia ao longo do tempo.",
+        "A taxa de juros é o custo do dinheiro emprestado, geralmente expresso como uma porcentagem.",
+        "O mercado de ações é onde investidores compram e vendem ações de empresas públicas.",
+        "A economia global é o sistema econômico internacional, onde países trocam bens, serviços e recursos financeiros.",
+        "A dívida pública é o total de empréstimos que o governo tem, frequentemente usado para financiar déficits orçamentários.",
+        "O PIB (Produto Interno Bruto) é a medida do valor total de bens e serviços produzidos em um país durante um determinado período.",
+        "A balança comercial é a diferença entre o valor das exportações e importações de um país.",
+        "A moeda fiduciária é uma moeda cujo valor não é respaldado por um ativo físico, como ouro ou prata.",
+        "Os impostos são contribuições financeiras obrigatórias feitas pelos cidadãos ao governo para financiar serviços públicos."
+    };
 
-    private string[] financeQuestions = {
-    "Qual é a principal vantagem de poupar parte da renda mensal?",
-    "Por que é importante planejar a aposentadoria desde cedo?",
-    "Para que serve o IRS (Imposto sobre o Rendimento das Pessoas Singulares) em Portugal?",
-    "Qual é uma das principais desvantagens do cartão de crédito?",
-    "Qual é o propósito de um empréstimo estudantil?",
-    "Como definir objetivos financeiros ajuda no planejamento pessoal?",
-    "Por que é importante diversificar os investimentos?",
-    "Qual é o objetivo principal de um fundo de emergência?",
-    "Quais são os impactos do endividamento excessivo na saúde financeira?",
-    "Quais são as vantagens e os riscos de investir em ações?",
-    "Qual é o principal benefício de criar um orçamento mensal?"
-};
+    private string[] financeFactsEN = {
+        "The national budget is a financial plan of the government that involves the revenues and expenses of the country.",
+        "Inflation is the general increase in the prices of goods and services in an economy over time.",
+        "The interest rate is the cost of borrowed money, usually expressed as a percentage.",
+        "The stock market is where investors buy and sell shares of publicly traded companies.",
+        "The global economy is the international economic system where countries exchange goods, services, and financial resources.",
+        "Public debt is the total amount of loans the government has, often used to finance budget deficits.",
+        "GDP (Gross Domestic Product) is the measure of the total value of goods and services produced in a country during a specific period.",
+        "The trade balance is the difference between the value of a country's exports and imports.",
+        "Fiat currency is a currency that is not backed by a physical asset such as gold or silver.",
+        "Taxes are mandatory financial contributions made by citizens to the government to fund public services."
+    };
 
-    private string[] correctAnswers = {
-    "Cria uma base financeira para imprevistos e para realizar objetivos de longo prazo.",
-    "Para garantir uma fonte de renda no futuro e manter o padrão de vida desejado.",
-    "É um tributo obrigatório que financia serviços públicos e funciona conforme a faixa de renda anual da pessoa.",
-    "Juros elevados em caso de atrasos, podendo gerar dívidas difíceis de quitar.",
-    "Permite financiar a educação e pagar o valor emprestado com condições facilitadas.",
-    "Ajuda a direcionar o planejamento financeiro e alcançar metas específicas.",
-    "Para reduzir riscos financeiros e aumentar a estabilidade ao espalhar o capital entre diferentes ativos.",
-    "Ter recursos suficientes para lidar com emergências sem recorrer a dívidas.",
-    "Limita a capacidade de economizar e investir, além de gerar dificuldades financeiras a longo prazo.",
-    "Permite lucrar com o crescimento de empresas, mas envolve maior risco de perda de capital.",
-    "Ajuda a monitorar receitas e despesas, evitando dívidas e alcançando metas financeiras."
-};
+    private string[] financeQuestionsPT = {
+        "O que é o orçamento nacional e qual sua função?",
+        "O que é inflação e como ela afeta a economia?",
+        "O que é a taxa de juros e como ela influencia o mercado?",
+        "O que é o mercado de ações e como ele funciona?",
+        "O que é a economia global e qual seu impacto nos países?",
+        "O que é a dívida pública e como ela afeta o governo?",
+        "O que é o PIB e como ele é calculado?",
+        "O que é a balança comercial e por que ela é importante?",
+        "O que é uma moeda fiduciária?",
+        "Qual a importância dos impostos para a economia?"
+    };
 
-    private string[][] incorrectAnswers = new string[][] {
-    new string[] { "É um recurso opcional, sem grande impacto no futuro financeiro.", "Serve apenas para gastar em viagens e lazer." },
-    new string[] { "Para aumentar a quantidade de gastos na juventude.", "Para garantir benefícios como férias prolongadas na aposentadoria." },
-    new string[] { "Para diminuir os custos de bens e serviços pessoais.", "Para ajudar exclusivamente no financiamento de dívidas pessoais." },
-    new string[] { "Possibilidade de acumular recompensas de fidelidade.", "Melhorar o crédito sem custos extras, mesmo com atrasos." },
-    new string[] { "Servir como apoio de curto prazo para despesas pessoais.", "Cobrir apenas materiais e despesas de lazer dos estudantes." },
-    new string[] { "Permite focar mais em compras de alto valor e bens de luxo.", "Faz com que o planejamento se torne mais restritivo e limitado." },
-    new string[] { "Para garantir lucros elevados em todos os ativos.", "Para eliminar a necessidade de um fundo de emergência." },
-    new string[] { "Aumentar o número de investimentos de risco.", "Garantir conforto financeiro apenas em curto prazo." },
-    new string[] { "Melhora a capacidade de poupar para o futuro.", "Facilita a obtenção de crédito com juros baixos." },
-    new string[] { "É totalmente seguro e garante lucros fixos.", "Não requer análise de mercado para tomar decisões." },
-    new string[] { "Permite gastar sem restrições mensais.", "Facilita o endividamento ao longo do tempo." }
-};
+    private string[] financeQuestionsEN = {
+        "What is the national budget and what is its function?",
+        "What is inflation and how does it affect the economy?",
+        "What is the interest rate and how does it influence the market?",
+        "What is the stock market and how does it work?",
+        "What is the global economy and what is its impact on countries?",
+        "What is public debt and how does it affect the government?",
+        "What is GDP and how is it calculated?",
+        "What is the trade balance and why is it important?",
+        "What is fiat currency?",
+        "What is the importance of taxes for the economy?"
+    };
 
+    private string[] correctAnswersPT = {
+        "É um plano financeiro do governo que envolve receitas e despesas.",
+        "É o aumento generalizado dos preços de bens e serviços ao longo do tempo.",
+        "É o custo do dinheiro emprestado, expresso como uma porcentagem.",
+        "É o lugar onde investidores compram e vendem ações de empresas.",
+        "É o sistema econômico internacional onde países trocam bens, serviços e recursos financeiros.",
+        "É o total de empréstimos que o governo tem para financiar déficits.",
+        "É a medida do valor total de bens e serviços produzidos em um país.",
+        "É a diferença entre exportações e importações de um país.",
+        "É uma moeda cujo valor não é respaldado por um ativo físico.",
+        "São contribuições obrigatórias feitas pelos cidadãos ao governo."
+    };
+
+    private string[] correctAnswersEN = {
+        "It is a financial plan of the government that involves revenues and expenses.",
+        "It is the general increase in the prices of goods and services over time.",
+        "It is the cost of borrowed money, expressed as a percentage.",
+        "It is the place where investors buy and sell shares of companies.",
+        "It is the international economic system where countries exchange goods, services, and financial resources.",
+        "It is the total amount of loans the government has to finance deficits.",
+        "It is the measure of the total value of goods and services produced in a country.",
+        "It is the difference between exports and imports of a country.",
+        "It is a currency whose value is not backed by a physical asset.",
+        "They are mandatory contributions made by citizens to the government."
+    };
+
+    private string[][] incorrectAnswersPT = {
+        new string[] { "É um plano financeiro para empresas privadas.", "É um documento feito apenas por bancos centrais." },
+        new string[] { "É o aumento de salários no governo.", "É o aumento das vendas de uma empresa." },
+        new string[] { "É o preço de um produto no mercado.", "É o valor da moeda de outro país." },
+        new string[] { "É onde os governos compram e vendem produtos.", "É onde se trocam moedas entre países." },
+        new string[] { "É uma economia onde os recursos são apenas naturais.", "É uma economia onde os países não trocam bens e serviços." },
+        new string[] { "É o total de empréstimos privados.", "É o financiamento das empresas privadas." },
+        new string[] { "É o valor de bens e serviços vendidos internacionalmente.", "É a quantidade de bens vendidos no mercado interno." },
+        new string[] { "É a diferença entre o preço de um produto e seu custo de produção.", "É a quantidade de produtos vendidos dentro de um país." },
+        new string[] { "É uma moeda com valor garantido por commodities.", "É uma moeda digital baseada em criptografia." },
+        new string[] { "São contribuições voluntárias para ONGs.", "São contribuições feitas apenas para financiar a educação." }
+    };
+
+    private string[][] incorrectAnswersEN = {
+        new string[] { "It is a financial plan for private companies.", "It is a document made only by central banks." },
+        new string[] { "It is the increase of government salaries.", "It is the increase of a company's sales." },
+        new string[] { "It is the price of a product in the market.", "It is the value of another country's currency." },
+        new string[] { "It is where governments buy and sell products.", "It is where currencies are exchanged between countries." },
+        new string[] { "It is an economy where resources are only natural.", "It is an economy where countries don't exchange goods and services." },
+        new string[] { "It is the total of private loans.", "It is financing for private companies." },
+        new string[] { "It is the value of goods and services sold internationally.", "It is the amount of goods sold in the domestic market." },
+        new string[] { "It is the difference between the price of a product and its production cost.", "It is the amount of products sold within a country." },
+        new string[] { "It is a currency backed by commodities.", "It is a digital currency based on cryptography." },
+        new string[] { "They are voluntary contributions to NGOs.", "They are contributions made only to fund education." }
+    };
 
     private void Start()
     {
@@ -94,20 +141,22 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void InitializeFactIndexes()
     {
-        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // Índices para controle de exibição de fatos/perguntas
+        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     }
 
     private void DisplayRandomFact()
     {
         if (factIndexes.Count == 0)
         {
-            InitializeFactIndexes(); // Reinicia a lista se todas as perguntas foram feitas
+            InitializeFactIndexes();
         }
 
         currentFactIndex = factIndexes[Random.Range(0, factIndexes.Count)];
-        themeText.text = "Literacia Financeira";
-        factText.text = financeFacts[currentFactIndex]; // Atualiza o texto do fato
-        factIndexes.Remove(currentFactIndex); // Remove o índice exibido
+
+        themeText.text = GameData.language == "en" ? "Finance" : "Finanças";
+        factText.text = GameData.language == "en" ? financeFactsEN[currentFactIndex] : financeFactsPT[currentFactIndex];
+
+        factIndexes.Remove(currentFactIndex);
 
         factPanel.SetActive(true);
         questionPanel.SetActive(false);
@@ -118,55 +167,37 @@ public class FinanceQuizManager : MonoBehaviour
         factPanel.SetActive(false);
         questionPanel.SetActive(true);
 
-        questionText.text = financeQuestions[currentFactIndex];
+        questionText.text = GameData.language == "en" ? financeQuestionsEN[currentFactIndex] : financeQuestionsPT[currentFactIndex];
         SetupAnswers();
     }
 
     private void SetupAnswers()
     {
-        // Obter a resposta correta
-        string correctAnswer = correctAnswers[currentFactIndex];
+        string correctAnswer = GameData.language == "en" ? correctAnswersEN[currentFactIndex] : correctAnswersPT[currentFactIndex];
+        string[] incorrects = GameData.language == "en" ? incorrectAnswersEN[currentFactIndex] : incorrectAnswersPT[currentFactIndex];
 
-        // Obter as respostas incorretas
-        string[] incorrectAnswersArray = incorrectAnswers[currentFactIndex];
-
-        // Criar lista para todas as respostas e adicionar a correta em posição aleatória
-        List<string> allAnswers = new List<string>(incorrectAnswersArray);
+        List<string> allAnswers = new List<string>(incorrects);
         int correctAnswerPosition = Random.Range(0, allAnswers.Count + 1);
         allAnswers.Insert(correctAnswerPosition, correctAnswer);
 
-        // Certifique-se de que temos o mesmo número de botões que respostas
-        if (answerButtons.Length < allAnswers.Count)
-        {
-            Debug.LogError("O número de botões é menor que o número de respostas disponíveis!");
-            return;
-        }
-
-        // Configurar botões de resposta
         for (int i = 0; i < answerButtons.Length; i++)
         {
             if (i < allAnswers.Count)
             {
-                int buttonIndex = i; // Captura o índice localmente para evitar problemas com closures
-
-                // Configurar o botão com o texto da resposta
+                int buttonIndex = i;
                 answerButtons[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[buttonIndex];
                 answerButtons[buttonIndex].onClick.RemoveAllListeners();
 
                 bool isCorrect = (buttonIndex == correctAnswerPosition);
                 answerButtons[buttonIndex].onClick.AddListener(() => AnswerSelected(isCorrect, answerButtons[buttonIndex].gameObject));
-
-                answerButtons[buttonIndex].gameObject.SetActive(true); // Certifique-se de ativar o botão
+                answerButtons[buttonIndex].gameObject.SetActive(true);
             }
             else
             {
-                // Desativar botões extras
                 answerButtons[i].gameObject.SetActive(false);
             }
         }
     }
-
-
 
     private void AnswerSelected(bool isCorrect, GameObject botao)
     {
@@ -175,123 +206,73 @@ public class FinanceQuizManager : MonoBehaviour
 
         if (isCorrect)
         {
-            botao.GetComponent<Image>().color = Color.green; // Indica resposta correta
+            botao.GetComponent<Image>().color = Color.green;
             Debug.Log("Resposta correta!");
             audioSource.clip = correctSound;
 
-            if (targetBook != null)
-            {
-                DisableBookCollider(targetBook);
-            }
+            if (targetBook != null) DisableBookCollider(targetBook);
+
             GameData.financePoints++;
-            FinancePointsText.text = GameData.financePoints.ToString();
-            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
+            financePointsText.text = GameData.financePoints.ToString();
+
             StartCoroutine(HandleAnswerFeedback(true, botao));
         }
         else
         {
-            botao.GetComponent<Image>().color = Color.red; // Indica resposta incorreta
+            botao.GetComponent<Image>().color = Color.red;
             ghostText.HandleMiss();
             Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
-            if(GameData.financePoints > 0)
-            {
-                GameData.financePoints--;
 
-            }
-            else
-            {
-                GameData.financePoints = 0;
-            }
-            
-            FinancePointsText.text = GameData.financePoints.ToString();
+            GameData.financePoints = Mathf.Max(GameData.financePoints - 1, 0);
+            financePointsText.text = GameData.financePoints.ToString();
 
             if (player != null)
             {
-                // Reposiciona o jogador com base na posição Y
-                if (playerPosition.y < 10)
-                {
-                    player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z);
-                    Debug.Log("Jogador reposicionado para a posição inicial.");
-                }
-                else
-                {
-                    player.transform.position = new Vector3(-50, 56.5f, player.transform.position.z); // Reposicionar jogador
-                    Debug.Log("Jogador reposicionado para a posição inicial.");
-                }
+                player.transform.position = playerPosition.y < 10
+                    ? new Vector3(-39, 9.531775f, player.transform.position.z)
+                    : new Vector3(-130, 79, player.transform.position.z);
             }
 
-            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
             StartCoroutine(HandleAnswerFeedback(false, botao));
         }
 
         audioSource.Play();
     }
 
-    // Corrotina para atrasar o fechamento do Canvas
     private IEnumerator HandleAnswerFeedback(bool isCorrect, GameObject botao)
     {
-        // Aguarda 1 segundo para mostrar a cor e tocar o som
         yield return new WaitForSeconds(0.2f);
-
-        // Reseta a cor do botão para a cor padrão
         botao.GetComponent<Image>().color = Color.white;
-
-        // Fecha o Canvas após o feedback
         Canva.SetActive(false);
         playerMovement.collidedStop = false;
-
-        // Exibe um novo fato apenas após o feedback
         DisplayRandomFact();
     }
 
-
-
     private GameObject DetermineBookBasedOnPlayerPosition()
     {
-        Vector3 playerPosition = player.transform.position;
+        Vector3 pos = player.transform.position;
 
-        if (playerPosition.y < 10) // Exemplo de condição
-        {
-            return book1;
-        }
-        else if (playerPosition.x >= -60)
-        {
-            return book2;
-        }
-        else if (playerPosition.x >= -80)
-        {
-            return book3;
-        }
-        else
-        {
-            return book4;
-        }
+        if (pos.y < 10) return book1;
+        if (pos.x <= -100) return book2;
+        if (pos.x <= -80) return book3;
+        return book4;
     }
 
     private void DisableBookCollider(GameObject book)
     {
-        if (book != null)
-        {
-            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
-            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+        if (book == null) return;
 
-            if (bookCollider != null)
-            {
-                bookCollider.enabled = false;
-                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
-            }
-            if (bookRigidbody != null)
-            {
-                bookRigidbody.bodyType = RigidbodyType2D.Dynamic;
-                bookRigidbody.gravityScale = 10;
-                Debug.Log($"Rigidbody2D do livro {book.name} alterado para Dynamic.");
-            }
-            Destroy(book, 5);
-        }
-        else
+        BoxCollider2D collider = book.GetComponent<BoxCollider2D>();
+        Rigidbody2D rb = book.GetComponent<Rigidbody2D>();
+
+        if (collider != null) collider.enabled = false;
+        if (rb != null)
         {
-            Debug.LogWarning("Livro não encontrado.");
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 10;
         }
+
+        Destroy(book, 5);
     }
 }

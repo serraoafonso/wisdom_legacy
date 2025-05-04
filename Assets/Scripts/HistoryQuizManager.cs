@@ -6,85 +6,138 @@ using System.Collections;
 
 public class HistoryQuizManager : MonoBehaviour
 {
-    public TextMeshProUGUI factText; // Texto do fato histórico
-    public TextMeshProUGUI questionText; // Texto da pergunta
-    public Button[] answerButtons; // Botões de resposta
-    public AudioSource audioSource; // AudioSource para sons de resposta
-    public AudioClip correctSound; // Som de resposta correta
-    public AudioClip incorrectSound; // Som de resposta incorreta
-    public GameObject factPanel; // Painel que exibe o fato histórico
-    public GameObject questionPanel; // Painel que exibe a pergunta
+    public TextMeshProUGUI factText;
+    public TextMeshProUGUI questionText;
+    public Button[] answerButtons;
+    public AudioSource audioSource;
+    public AudioClip correctSound;
+    public AudioClip incorrectSound;
+    public GameObject factPanel;
+    public GameObject questionPanel;
     public TextMeshProUGUI themeText;
     public TextMeshProUGUI HistoryPointsText;
-    public GameObject Canva; // Painel para controle adicional
+    public GameObject Canva;
 
     [SerializeField] private GhostText ghostText;
-    public PlayerMovement playerMovement; // Referência ao script PlayerMovement
-    public GameObject book1; // Referência ao objeto do livro
-    public GameObject book2; // Referência ao objeto do livro
-    public GameObject book3; // Referência ao objeto do livro
-    public GameObject book4; // Referência ao objeto do livro
-    public GameObject player; // Referência ao jogador
+    public PlayerMovement playerMovement;
+    public GameObject book1, book2, book3, book4;
+    public GameObject player;
 
     private int currentFactIndex;
     private List<int> factIndexes;
 
-    private string[] historyFacts = {
-    "O Renascimento foi um movimento cultural que ocorreu na Europa entre os séculos XIV e XVII, caracterizado pelo ressurgimento das artes, ciências e do pensamento humanista.",
-    "A Revolução Francesa, que começou em 1789, foi um marco que derrubou a monarquia absolutista na França, resultando em profundas mudanças sociais e políticas.",
-    "A Guerra Civil Americana (1861-1865) foi um conflito entre os estados do Norte e do Sul dos EUA, em grande parte devido à questão da escravidão e à luta pela preservação da União.",
-    "A Primeira Guerra Mundial (1914-1918) envolveu grandes potências mundiais e resultou em milhões de mortos, além de mudanças significativas no mapa político da Europa.",
-    "A Era das Grandes Navegações, entre os séculos XV e XVII, foi um período de expansão marítima europeia que levou à descoberta de novas rotas e territórios ao redor do mundo.",
-    "A criação da Organização das Nações Unidas (ONU) em 1945 teve como objetivo promover a paz e a cooperação internacional após a devastação da Segunda Guerra Mundial.",
-    "A Revolução Industrial, que começou no século XVIII, transformou a economia mundial com o surgimento de máquinas e fábricas, promovendo urbanização e inovação tecnológica.",
-    "A Declaração de Independência dos Estados Unidos foi assinada em 1776, marcando a separação oficial das Treze Colônias do domínio britânico.",
-    "A Segunda Guerra Mundial (1939-1945) foi um conflito global que envolveu as principais potências mundiais e levou à divisão do mundo entre blocos ideológicos.",
-    "O Tratado de Versalhes, assinado em 1919, marcou o fim oficial da Primeira Guerra Mundial, impondo condições severas à Alemanha.",
-    "O Império Romano foi uma das civilizações mais influentes da história, deixando um legado em áreas como direito, engenharia e cultura."
-};
+    private string[] historyFactsPT = {
+        "O Renascimento foi um movimento cultural que ocorreu na Europa...",
+        "A Revolução Francesa, que começou em 1789...",
+        "A Guerra Civil Americana (1861-1865)...",
+        "A Primeira Guerra Mundial (1914-1918)...",
+        "A Era das Grandes Navegações...",
+        "A criação da Organização das Nações Unidas...",
+        "A Revolução Industrial, que começou no século XVIII...",
+        "A Declaração de Independência dos Estados Unidos foi assinada em 1776...",
+        "A Segunda Guerra Mundial (1939-1945)...",
+        "O Tratado de Versalhes, assinado em 1919...",
+        "O Império Romano foi uma das civilizações mais influentes..."
+    };
 
-    private string[] historyQuestions = {
-    "Qual foi o impacto cultural do Renascimento na Europa?",
-    "Quais foram algumas das principais consequências da Revolução Francesa?",
-    "Qual foi a causa central da Guerra Civil Americana?",
-    "Qual foi o principal resultado da Primeira Guerra Mundial para o mapa político europeu?",
-    "Qual era o principal objetivo da Era das Grandes Navegações?",
-    "Por que foi criada a ONU em 1945?",
-    "Qual foi o impacto da Revolução Industrial no mundo?",
-    "O que representou a assinatura da Declaração de Independência dos Estados Unidos?",
-    "Quais foram as principais consequências da Segunda Guerra Mundial?",
-    "O que foi o Tratado de Versalhes e qual foi seu impacto na Alemanha?",
-    "Qual foi o legado mais duradouro do Império Romano?"
-};
+    private string[] historyQuestionsPT = {
+        "Qual foi o impacto cultural do Renascimento na Europa?",
+        "Quais foram algumas das principais consequências da Revolução Francesa?",
+        "Qual foi a causa central da Guerra Civil Americana?",
+        "Qual foi o principal resultado da Primeira Guerra Mundial...",
+        "Qual era o principal objetivo da Era das Grandes Navegações?",
+        "Por que foi criada a ONU em 1945?",
+        "Qual foi o impacto da Revolução Industrial no mundo?",
+        "O que representou a assinatura da Declaração de Independência dos EUA?",
+        "Quais foram as principais consequências da Segunda Guerra Mundial?",
+        "O que foi o Tratado de Versalhes e seu impacto na Alemanha?",
+        "Qual foi o legado mais duradouro do Império Romano?"
+    };
 
-    private string[] correctAnswers = {
-    "Ressurgimento das artes e ciências e fortalecimento do pensamento humanista.",
-    "Derrubada da monarquia e estabelecimento de princípios de igualdade e liberdade.",
-    "Conflito entre estados do Norte e do Sul sobre a questão da escravidão e a preservação da União.",
-    "Mudanças significativas nas fronteiras europeias e o enfraquecimento de impérios tradicionais.",
-    "Descobrir novas rotas e territórios para expandir o comércio e a influência europeia.",
-    "Promover a paz e a cooperação internacional após a Segunda Guerra Mundial.",
-    "Transformou a economia mundial, promovendo urbanização, inovação e o surgimento de fábricas.",
-    "A separação oficial das Treze Colônias do domínio britânico e a formação de uma nação independente.",
-    "A divisão do mundo entre blocos ideológicos e a reconstrução de países devastados pelo conflito.",
-    "Imposição de condições severas à Alemanha, que contribuiu para tensões políticas futuras.",
-    "Legado em áreas como direito, engenharia, arquitetura e cultura que influenciam até hoje."
-};
+    private string[] correctAnswersPT = {
+        "Ressurgimento das artes e ciências...",
+        "Derrubada da monarquia e estabelecimento de princípios...",
+        "Conflito entre estados do Norte e do Sul...",
+        "Mudanças significativas nas fronteiras europeias...",
+        "Descobrir novas rotas e territórios...",
+        "Promover a paz e a cooperação internacional...",
+        "Transformou a economia mundial...",
+        "A separação oficial das Treze Colônias...",
+        "A divisão do mundo entre blocos ideológicos...",
+        "Imposição de condições severas à Alemanha...",
+        "Legado em áreas como direito, engenharia..."
+    };
 
-    private string[][] incorrectAnswers = new string[][] {
-    new string[] { "Declínio do interesse em ciências e artes, com foco exclusivo em religião.", "Expansão da monarquia absoluta na Europa." },
-    new string[] { "Fortalecimento da monarquia na França.", "Criação de uma aliança entre França e Inglaterra contra a Áustria." },
-    new string[] { "Questões territoriais com o México.", "Conflito religioso entre estados do Norte e do Sul dos EUA." },
-    new string[] { "Unificação completa dos países europeus sob um governo único.", "Expansão do império alemão sobre toda a Europa Ocidental." },
-    new string[] { "Exploração de minas de ouro no continente africano.", "Conquista e colonização da Ásia exclusivamente." },
-    new string[] { "Promover a divisão dos territórios coloniais da Europa.", "Organizar o comércio internacional e a exploração econômica global." },
-    new string[] { "Reduziu a inovação tecnológica e aumentou a dependência de trabalho manual.", "Teve impacto apenas na Europa, sem influenciar outras partes do mundo." },
-    new string[] { "A submissão das colônias aos interesses britânicos.", "O início de uma nova aliança entre as Treze Colônias e a Inglaterra." },
-    new string[] { "A unificação imediata de todas as nações sob um governo global.", "O fortalecimento dos impérios europeus em todo o mundo." },
-    new string[] { "A restauração da monarquia alemã após a guerra.", "Uma aliança entre França e Alemanha para reconstrução econômica." },
-    new string[] { "Impacto limitado à península Itálica, sem influenciar outras civilizações.", "Apenas conquistas militares, sem legado cultural ou jurídico." }
-};
+    private string[][] incorrectAnswersPT = {
+        new string[] { "Declínio do interesse em ciências...", "Expansão da monarquia absoluta..." },
+        new string[] { "Fortalecimento da monarquia...", "Criação de uma aliança com Inglaterra..." },
+        new string[] { "Questões territoriais com o México.", "Conflito religioso entre estados..." },
+        new string[] { "Unificação completa dos países...", "Expansão do império alemão..." },
+        new string[] { "Exploração de minas de ouro...", "Conquista e colonização da Ásia..." },
+        new string[] { "Promover a divisão dos territórios...", "Organizar o comércio internacional..." },
+        new string[] { "Reduziu a inovação tecnológica...", "Teve impacto apenas na Europa..." },
+        new string[] { "A submissão das colônias...", "Nova aliança entre EUA e Inglaterra." },
+        new string[] { "Unificação imediata de todas as nações.", "Fortalecimento dos impérios europeus." },
+        new string[] { "Restauração da monarquia alemã...", "Aliança entre França e Alemanha..." },
+        new string[] { "Impacto limitado à península Itálica...", "Apenas conquistas militares..." }
+    };
 
+    // Dados em inglês
+    private string[] historyFactsEN = {
+        "The Renaissance was a cultural movement in Europe...",
+        "The French Revolution, which began in 1789...",
+        "The American Civil War (1861–1865)...",
+        "World War I (1914–1918)...",
+        "The Age of Exploration...",
+        "The United Nations (UN) was created in 1945...",
+        "The Industrial Revolution, which began in the 18th century...",
+        "The U.S. Declaration of Independence was signed in 1776...",
+        "World War II (1939–1945)...",
+        "The Treaty of Versailles, signed in 1919...",
+        "The Roman Empire was one of the most influential..."
+    };
+
+    private string[] historyQuestionsEN = {
+        "What was the cultural impact of the Renaissance in Europe?",
+        "What were some major consequences of the French Revolution?",
+        "What was the central cause of the American Civil War?",
+        "What was the main result of World War I for Europe?",
+        "What was the main goal of the Age of Exploration?",
+        "Why was the UN created in 1945?",
+        "What was the impact of the Industrial Revolution?",
+        "What did the signing of the U.S. Declaration of Independence represent?",
+        "What were the consequences of World War II?",
+        "What was the Treaty of Versailles and its impact on Germany?",
+        "What was the Roman Empire's most lasting legacy?"
+    };
+
+    private string[] correctAnswersEN = {
+        "Revival of arts and sciences and humanist thought.",
+        "Overthrow of monarchy and establishment of equality and liberty.",
+        "Conflict between North and South over slavery and Union preservation.",
+        "Major border changes and weakening of traditional empires.",
+        "To discover new routes and expand European influence.",
+        "To promote peace and international cooperation after WWII.",
+        "It transformed the global economy and encouraged innovation.",
+        "The official separation of the 13 Colonies from Britain.",
+        "Global division into ideological blocs and reconstruction.",
+        "Harsh conditions imposed on Germany, fueling future tensions.",
+        "Influence in law, engineering, and culture still seen today."
+    };
+
+    private string[][] incorrectAnswersEN = {
+        new string[] { "Decline of interest in sciences and arts.", "Expansion of absolute monarchy." },
+        new string[] { "Strengthening of the monarchy.", "Alliance with England against Austria." },
+        new string[] { "Territorial disputes with Mexico.", "Religious conflict between states." },
+        new string[] { "Full unification of Europe.", "German empire expansion across Europe." },
+        new string[] { "Gold mining in Africa.", "Colonization of only Asia." },
+        new string[] { "Divide Europe's colonial territories.", "Organize global economic exploitation." },
+        new string[] { "Decreased innovation and rise of manual labor.", "Impacted only Europe." },
+        new string[] { "Colonies submitted to Britain.", "New alliance between U.S. and England." },
+        new string[] { "Immediate unification under one government.", "Empires strengthened globally." },
+        new string[] { "Restoration of the German monarchy.", "Alliance for economic recovery." },
+        new string[] { "Only impacted Italy.", "Only military conquests, no legacy." }
+    };
 
     private void Start()
     {
@@ -95,20 +148,24 @@ public class HistoryQuizManager : MonoBehaviour
 
     private void InitializeFactIndexes()
     {
-        factIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // Índices para selecionar perguntas não repetidas
+        factIndexes = new List<int>();
+        for (int i = 0; i < historyFactsPT.Length; i++)
+        {
+            factIndexes.Add(i);
+        }
     }
 
     private void DisplayRandomFact()
     {
         if (factIndexes.Count == 0)
         {
-            InitializeFactIndexes(); // Reinicia a lista se todas as perguntas foram feitas
+            InitializeFactIndexes();
         }
 
         currentFactIndex = factIndexes[Random.Range(0, factIndexes.Count)];
-        themeText.text = "História";
-        factText.text = historyFacts[currentFactIndex]; // Atualiza o fato histórico exibido
-        factIndexes.Remove(currentFactIndex); // Remove o índice exibido
+        themeText.text = GameData.language == "en" ? "History" : "História";
+        factText.text = GameData.language == "en" ? historyFactsEN[currentFactIndex] : historyFactsPT[currentFactIndex];
+        factIndexes.Remove(currentFactIndex);
 
         factPanel.SetActive(true);
         questionPanel.SetActive(false);
@@ -119,55 +176,37 @@ public class HistoryQuizManager : MonoBehaviour
         factPanel.SetActive(false);
         questionPanel.SetActive(true);
 
-        questionText.text = historyQuestions[currentFactIndex];
+        questionText.text = GameData.language == "en" ? historyQuestionsEN[currentFactIndex] : historyQuestionsPT[currentFactIndex];
         SetupAnswers();
     }
 
     private void SetupAnswers()
     {
-        // Obter a resposta correta
-        string correctAnswer = correctAnswers[currentFactIndex];
+        string correctAnswer = GameData.language == "en" ? correctAnswersEN[currentFactIndex] : correctAnswersPT[currentFactIndex];
+        string[] incorrectArray = GameData.language == "en" ? incorrectAnswersEN[currentFactIndex] : incorrectAnswersPT[currentFactIndex];
 
-        // Obter as respostas incorretas
-        string[] incorrectAnswersArray = incorrectAnswers[currentFactIndex];
-
-        // Criar lista para todas as respostas e adicionar a correta em posição aleatória
-        List<string> allAnswers = new List<string>(incorrectAnswersArray);
+        List<string> allAnswers = new List<string>(incorrectArray);
         int correctAnswerPosition = Random.Range(0, allAnswers.Count + 1);
         allAnswers.Insert(correctAnswerPosition, correctAnswer);
 
-        // Certifique-se de que temos o mesmo número de botões que respostas
-        if (answerButtons.Length < allAnswers.Count)
-        {
-            Debug.LogError("O número de botões é menor que o número de respostas disponíveis!");
-            return;
-        }
-
-        // Configurar botões de resposta
         for (int i = 0; i < answerButtons.Length; i++)
         {
             if (i < allAnswers.Count)
             {
-                int buttonIndex = i; // Captura o índice localmente para evitar problemas com closures
+                int buttonIndex = i;
+                answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[i];
+                answerButtons[i].onClick.RemoveAllListeners();
 
-                // Configurar o botão com o texto da resposta
-                answerButtons[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = allAnswers[buttonIndex];
-                answerButtons[buttonIndex].onClick.RemoveAllListeners();
-
-                bool isCorrect = (buttonIndex == correctAnswerPosition);
-                answerButtons[buttonIndex].onClick.AddListener(() => AnswerSelected(isCorrect, answerButtons[buttonIndex].gameObject));
-
-                answerButtons[buttonIndex].gameObject.SetActive(true); // Certifique-se de ativar o botão
+                bool isCorrect = (i == correctAnswerPosition);
+                answerButtons[i].onClick.AddListener(() => AnswerSelected(isCorrect, answerButtons[buttonIndex].gameObject));
+                answerButtons[i].gameObject.SetActive(true);
             }
             else
             {
-                // Desativar botões extras
                 answerButtons[i].gameObject.SetActive(false);
             }
         }
     }
-
-
 
     private void AnswerSelected(bool isCorrect, GameObject botao)
     {
@@ -176,125 +215,74 @@ public class HistoryQuizManager : MonoBehaviour
 
         if (isCorrect)
         {
-            botao.GetComponent<Image>().color = Color.green; // Indica resposta correta
-            Debug.Log("Resposta correta!");
+            botao.GetComponent<Image>().color = Color.green;
             audioSource.clip = correctSound;
 
             if (targetBook != null)
-            {
                 DisableBookCollider(targetBook);
-            }
-            GameData.historyPoints++;
-            HistoryPointsText.text = GameData.historyPoints.ToString();
 
-            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
-            StartCoroutine(HandleAnswerFeedback(true, botao));
+            GameData.historyPoints++;
         }
         else
         {
-            botao.GetComponent<Image>().color = Color.red; // Indica resposta incorreta
+            botao.GetComponent<Image>().color = Color.red;
             ghostText.HandleMiss();
-            Debug.Log("Resposta incorreta!");
             audioSource.clip = incorrectSound;
 
-            if (GameData.historyPoints > 0)
-            {
-                GameData.historyPoints--;
-
-            }
-            else
-            {
-                GameData.historyPoints = 0;
-            }
-
-            HistoryPointsText.text = GameData.historyPoints.ToString();
+            GameData.historyPoints = Mathf.Max(0, GameData.historyPoints - 1);
 
             if (player != null)
             {
-                // Reposiciona o jogador com base na posição Y
                 if (playerPosition.y < 10)
-                {
                     player.transform.position = new Vector3(-39, 9.531775f, player.transform.position.z);
-                    Debug.Log("Jogador reposicionado para a posição inicial.");
-                }
                 else
-                {
-                    player.transform.position = new Vector3(-130, 37, player.transform.position.z); // Reposicionar jogador
-                    Debug.Log("Jogador reposicionado para a posição inicial.");
-                }
+                    player.transform.position = new Vector3(-130, 37, player.transform.position.z);
             }
-
-            // Mantém o Canvas ativo por um tempo para mostrar a cor/som
-            StartCoroutine(HandleAnswerFeedback(false, botao));
         }
 
+        HistoryPointsText.text = GameData.historyPoints.ToString();
         audioSource.Play();
+        StartCoroutine(HandleAnswerFeedback(isCorrect, botao));
     }
 
-    // Corrotina para atrasar o fechamento do Canvas
     private IEnumerator HandleAnswerFeedback(bool isCorrect, GameObject botao)
     {
-        // Aguarda 1 segundo para mostrar a cor e tocar o som
         yield return new WaitForSeconds(0.2f);
-
-        // Reseta a cor do botão para a cor padrão
         botao.GetComponent<Image>().color = Color.white;
-
-        // Fecha o Canvas após o feedback
         Canva.SetActive(false);
         playerMovement.collidedStop = false;
-
-        // Exibe um novo fato apenas após o feedback
         DisplayRandomFact();
     }
 
-
-    // Método para determinar qual livro alterar com base na posição do jogador
     private GameObject DetermineBookBasedOnPlayerPosition()
     {
         Vector3 playerPosition = player.transform.position;
 
-        if (playerPosition.y < 10) // Exemplo de condição
-        {
+        if (playerPosition.y < 10)
             return book1;
-        }
         else if (playerPosition.x <= -100)
-        {
             return book2;
-        }
         else if (playerPosition.x <= -80)
-        {
             return book3;
-        }
         else
-        {
             return book4;
-        }
     }
 
     private void DisableBookCollider(GameObject book)
     {
         if (book != null)
         {
-            BoxCollider2D bookCollider = book.GetComponent<BoxCollider2D>();
-            Rigidbody2D bookRigidbody = book.GetComponent<Rigidbody2D>();
+            var col = book.GetComponent<BoxCollider2D>();
+            var rb = book.GetComponent<Rigidbody2D>();
 
-            if (bookCollider != null)
+            if (col) col.enabled = false;
+            if (rb)
             {
-                bookCollider.enabled = false;
-                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.gravityScale = 10;
             }
-            if (bookRigidbody != null)
-            {
-                bookRigidbody.bodyType = RigidbodyType2D.Dynamic;
-                bookRigidbody.gravityScale = 10;
-                Debug.Log($"Rigidbody2D do livro {book.name} alterado para Dynamic.");
-            }
+
             Destroy(book, 5);
-        }
-        else
-        {
-            Debug.LogWarning("Livro não encontrado.");
         }
     }
 }

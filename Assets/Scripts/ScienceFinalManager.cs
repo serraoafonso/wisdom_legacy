@@ -23,50 +23,98 @@ public class ScienceFinalManager : MonoBehaviour
     private List<int> questionIndexes;
 
     // Dados de perguntas e respostas de ciência
-    private string[] questions = {
-       "O que é a gravidade e qual sua função no sistema solar?",
-    "Qual é a função da camada de ozônio na atmosfera terrestre?",
-    "Qual é a teoria das placas tectônicas e quais fenômenos ela ajuda a explicar?",
-    "Qual é a função das células nos organismos vivos?",
-    "Como funciona o processo de evolução?",
-    "Para que serve a fotossíntese nas plantas?",
-    "O que é o DNA e qual a sua função nos organismos vivos?",
-    "Por que a água é essencial para a vida na Terra?",
-    "O que são buracos negros e quais são suas características?",
-    "Como os vírus se replicam e qual seu impacto na saúde?",
-    "O que é o efeito estufa e como ele influencia o clima da Terra?"
+    private string language;
+
+    // Perguntas e respostas em português
+    private string[] questionsPT = {
+        "O que é a gravidade e qual sua função no sistema solar?",
+        "Qual é a função da camada de ozônio na atmosfera terrestre?",
+        "Qual é a teoria das placas tectônicas e quais fenômenos ela ajuda a explicar?",
+        "Qual é a função das células nos organismos vivos?",
+        "Como funciona o processo de evolução?",
+        "Para que serve a fotossíntese nas plantas?",
+        "O que é o DNA e qual a sua função nos organismos vivos?",
+        "Por que a água é essencial para a vida na Terra?",
+        "O que são buracos negros e quais são suas características?",
+        "Como os vírus se replicam e qual seu impacto na saúde?",
+        "O que é o efeito estufa e como ele influencia o clima da Terra?"
     };
 
-    private string[] correctAnswers = {
-    "É a força que atrai os objetos uns aos outros e mantém os planetas em órbita ao redor do Sol.",
-    "Absorver a maior parte da radiação ultravioleta prejudicial, protegendo a Terra.",
-    "Que a crosta terrestre é dividida em placas que se movem, causando terremotos e a formação de montanhas.",
-    "Servem como unidades básicas de vida, permitindo a formação e o funcionamento dos organismos.",
-    "É o processo de diversificação das espécies através da seleção natural ao longo do tempo.",
-    "Permite que as plantas produzam energia e oxigênio, essenciais para a vida na Terra.",
-    "Contém as instruções genéticas que regulam o desenvolvimento e o funcionamento dos organismos vivos.",
-    "É essencial para processos biológicos como hidratação celular e transporte de nutrientes.",
-    "São regiões com gravidade tão forte que nem a luz pode escapar, deformando o espaço ao seu redor.",
-    "Dependem de hospedeiros vivos para se replicar, causando doenças ao invadir células hospedeiras.",
-    "É um fenômeno que mantém a Terra aquecida, mas sua intensificação pode levar a mudanças climáticas."
+    private string[] correctAnswersPT = {
+        "É a força que atrai os objetos uns aos outros e mantém os planetas em órbita ao redor do Sol.",
+        "Absorver a maior parte da radiação ultravioleta prejudicial, protegendo a Terra.",
+        "Que a crosta terrestre é dividida em placas que se movem, causando terremotos e a formação de montanhas.",
+        "Servem como unidades básicas de vida, permitindo a formação e o funcionamento dos organismos.",
+        "É o processo de diversificação das espécies através da seleção natural ao longo do tempo.",
+        "Permite que as plantas produzam energia e oxigênio, essenciais para a vida na Terra.",
+        "Contém as instruções genéticas que regulam o desenvolvimento e o funcionamento dos organismos vivos.",
+        "É essencial para processos biológicos como hidratação celular e transporte de nutrientes.",
+        "São regiões com gravidade tão forte que nem a luz pode escapar, deformando o espaço ao seu redor.",
+        "Dependem de hospedeiros vivos para se replicar, causando doenças ao invadir células hospedeiras.",
+        "É um fenômeno que mantém a Terra aquecida, mas sua intensificação pode levar a mudanças climáticas."
     };
 
-    private string[][] incorrectAnswers = new string[][] {
+    private string[][] incorrectAnswersPT = new string[][] {
         new string[] { "É uma força que apenas afeta objetos grandes como planetas e estrelas.", "É uma força que repele objetos uns dos outros no espaço." },
-    new string[] { "Reflete a radiação solar para o espaço, regulando o clima.", "Diminui a quantidade de oxigênio na atmosfera." },
-    new string[] { "Que os continentes são imóveis e fixos na crosta terrestre.", "Que a superfície terrestre é completamente sólida e inquebrável." },
-    new string[] { "Somente armazenam informações genéticas sem realizar nenhuma função.", "Atuam apenas na reprodução dos organismos." },
-    new string[] { "É um processo que ocorre em dias de chuva e influencia o comportamento animal.", "Um ciclo biológico que apenas afeta os animais." },
-    new string[] { "Produz apenas glicose, mas não tem efeito no oxigênio.", "É apenas um processo de absorção de luz solar sem outra função." },
-    new string[] { "É uma molécula que serve apenas como fonte de energia para células.", "Atua exclusivamente na reprodução de organismos multicelulares." },
-    new string[] { "É importante apenas para a formação de oceanos e rios.", "Apenas organismos aquáticos precisam dela para sobreviver." },
-    new string[] { "São estrelas em colapso que brilham intensamente.", "São buracos que liberam luz e matéria no espaço." },
-    new string[] { "Se replicam sozinhos sem precisar de células hospedeiras.", "Atuam apenas de forma benéfica para os organismos vivos." },
-    new string[] { "Aumenta a quantidade de oxigênio na atmosfera.", "Não tem impacto direto na temperatura da Terra." }
+        new string[] { "Reflete a radiação solar para o espaço, regulando o clima.", "Diminui a quantidade de oxigênio na atmosfera." },
+        new string[] { "Que os continentes são imóveis e fixos na crosta terrestre.", "Que a superfície terrestre é completamente sólida e inquebrável." },
+        new string[] { "Somente armazenam informações genéticas sem realizar nenhuma função.", "Atuam apenas na reprodução dos organismos." },
+        new string[] { "É um processo que ocorre em dias de chuva e influencia o comportamento animal.", "Um ciclo biológico que apenas afeta os animais." },
+        new string[] { "Produz apenas glicose, mas não tem efeito no oxigênio.", "É apenas um processo de absorção de luz solar sem outra função." },
+        new string[] { "É uma molécula que serve apenas como fonte de energia para células.", "Atua exclusivamente na reprodução de organismos multicelulares." },
+        new string[] { "É importante apenas para a formação de oceanos e rios.", "Apenas organismos aquáticos precisam dela para sobreviver." },
+        new string[] { "São estrelas em colapso que brilham intensamente.", "São buracos que liberam luz e matéria no espaço." },
+        new string[] { "Se replicam sozinhos sem precisar de células hospedeiras.", "Atuam apenas de forma benéfica para os organismos vivos." },
+        new string[] { "Aumenta a quantidade de oxigênio na atmosfera.", "Não tem impacto direto na temperatura da Terra." }
+    };
+
+    // Perguntas e respostas em inglês
+    private string[] questionsEN = {
+        "What is gravity and what is its function in the solar system?",
+        "What is the function of the ozone layer in Earth's atmosphere?",
+        "What is the theory of plate tectonics and what phenomena does it help explain?",
+        "What is the function of cells in living organisms?",
+        "How does the process of evolution work?",
+        "What is the purpose of photosynthesis in plants?",
+        "What is DNA and what is its function in living organisms?",
+        "Why is water essential for life on Earth?",
+        "What are black holes and what are their characteristics?",
+        "How do viruses replicate and what is their impact on health?",
+        "What is the greenhouse effect and how does it influence Earth's climate?"
+    };
+
+    private string[] correctAnswersEN = {
+        "It is the force that attracts objects to each other and keeps planets in orbit around the Sun.",
+        "It absorbs most of the harmful ultraviolet radiation, protecting Earth.",
+        "That the Earth's crust is divided into plates that move, causing earthquakes and the formation of mountains.",
+        "They serve as the basic units of life, allowing for the formation and functioning of organisms.",
+        "It is the process of species diversification through natural selection over time.",
+        "It allows plants to produce energy and oxygen, which are essential for life on Earth.",
+        "It contains the genetic instructions that regulate the development and functioning of living organisms.",
+        "It is essential for biological processes such as cellular hydration and nutrient transport.",
+        "They are regions with such strong gravity that even light cannot escape, distorting space around them.",
+        "They depend on living hosts to replicate, causing diseases by invading host cells.",
+        "It is a phenomenon that keeps Earth warm, but its intensification can lead to climate changes."
+    };
+
+    private string[][] incorrectAnswersEN = new string[][] {
+        new string[] { "It is a force that only affects large objects like planets and stars.", "It is a force that repels objects from each other in space." },
+        new string[] { "It reflects solar radiation into space, regulating the climate.", "It decreases the amount of oxygen in the atmosphere." },
+        new string[] { "That continents are immobile and fixed on the Earth's crust.", "That the Earth's surface is completely solid and unbreakable." },
+        new string[] { "They only store genetic information without performing any function.", "They only act in the reproduction of organisms." },
+        new string[] { "It is a process that occurs on rainy days and influences animal behavior.", "A biological cycle that only affects animals." },
+        new string[] { "It only produces glucose, but has no effect on oxygen.", "It is just a process of absorbing sunlight with no other function." },
+        new string[] { "It is a molecule that only serves as an energy source for cells.", "It acts exclusively in the reproduction of multicellular organisms." },
+        new string[] { "It is important only for the formation of oceans and rivers.", "Only aquatic organisms need it to survive." },
+        new string[] { "They are collapsing stars that shine intensely.", "They are holes that emit light and matter into space." },
+        new string[] { "They replicate by themselves without needing host cells.", "They only act in a beneficial way for living organisms." },
+        new string[] { "It increases the amount of oxygen in the atmosphere.", "It has no direct impact on Earth's temperature." }
     };
 
     private void Start()
     {
+        // Assume gameData.language is set somewhere in the game
+        language = gameData.language;
         StartQuiz();
     }
 
@@ -74,7 +122,7 @@ public class ScienceFinalManager : MonoBehaviour
     {
         // Inicializa o quiz com todas as perguntas
         questionIndexes = new List<int>();
-        for (int i = 0; i < questions.Length; i++)
+        for (int i = 0; i < GetQuestions().Length; i++)
         {
             questionIndexes.Add(i);
         }
@@ -87,6 +135,21 @@ public class ScienceFinalManager : MonoBehaviour
         {
             playerMovement.collidedStop = true;
         }
+    }
+
+    private string[] GetQuestions()
+    {
+        return language == "en" ? questionsEN : questionsPT;
+    }
+
+    private string[] GetCorrectAnswers()
+    {
+        return language == "en" ? correctAnswersEN : correctAnswersPT;
+    }
+
+    private string[][] GetIncorrectAnswers()
+    {
+        return language == "en" ? incorrectAnswersEN : incorrectAnswersPT;
     }
 
     private void ShuffleQuestions()
@@ -111,16 +174,16 @@ public class ScienceFinalManager : MonoBehaviour
         currentQuestionIndex = questionIndexes[0];
         questionIndexes.RemoveAt(0);
 
-        questionText.text = questions[currentQuestionIndex];
-        List<string> answerOptions = new List<string>(incorrectAnswers[currentQuestionIndex]);
-        answerOptions.Add(correctAnswers[currentQuestionIndex]);
+        questionText.text = GetQuestions()[currentQuestionIndex];
+        List<string> answerOptions = new List<string>(GetIncorrectAnswers()[currentQuestionIndex]);
+        answerOptions.Add(GetCorrectAnswers()[currentQuestionIndex]);
         ShuffleList(answerOptions); // Método para embaralhar respostas
 
         for (int i = 0; i < answerButtons.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answerOptions[i];
             answerButtons[i].onClick.RemoveAllListeners();
-            bool isCorrect = answerOptions[i] == correctAnswers[currentQuestionIndex];
+            bool isCorrect = answerOptions[i] == GetCorrectAnswers()[currentQuestionIndex];
             answerButtons[i].onClick.AddListener(() => Answer(isCorrect));
         }
     }
@@ -156,7 +219,6 @@ public class ScienceFinalManager : MonoBehaviour
             if (GameData.sciencePoints > 1)
             {
                 GameData.sciencePoints -= 2;
-
             }
             else
             {
@@ -176,11 +238,11 @@ public class ScienceFinalManager : MonoBehaviour
         GameData.concluded = true;
         GameData.sciencePoints += 3;
         sciencePointsText.text = GameData.sciencePoints.ToString();
-        
+
         // Finaliza o quiz
         quizPanel.SetActive(false);
         victoryPanel.SetActive(true);
-      
+
         // Reativa o movimento do jogador
         if (playerMovement != null)
         {
