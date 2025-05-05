@@ -20,7 +20,8 @@ public class HistoryFinalManager : MonoBehaviour
 
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
-    private List<int> questionIndexes;
+    private List<string> answerOptions;
+     private List<int> questionIndexes;
 
     // Perguntas e respostas em diferentes idiomas
     private string[] questionsPT = {

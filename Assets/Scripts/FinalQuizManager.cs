@@ -93,7 +93,7 @@ public class FinalQuizManager : MonoBehaviour
     private void Start()
     {
         // Assume gameData.language is set somewhere in the game
-        language = gameData.language;
+        language = GameData.language;
 
         StartQuiz();
     }

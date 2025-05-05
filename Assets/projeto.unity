@@ -3014,7 +3014,7 @@ MonoBehaviour:
   factPanel: {fileID: 1750863459}
   questionPanel: {fileID: 1365641572}
   themeText: {fileID: 346775262}
-  FinancePointsText: {fileID: 1390373264}
+  financePointsText: {fileID: 1390373264}
   Canva: {fileID: 180364210}
   ghostText: {fileID: 1103392675}
   playerMovement: {fileID: 883604047}

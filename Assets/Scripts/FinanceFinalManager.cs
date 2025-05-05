@@ -21,6 +21,7 @@ public class FinanceFinalManager : MonoBehaviour
     private int correctAnswersCount; // Contador de respostas corretas seguidas
     private int currentQuestionIndex;
     private List<int> questionIndexes;
+    private List<string> answerOptions;
 
     // Perguntas e respostas em diferentes idiomas
     private string[] questionsPT = {
