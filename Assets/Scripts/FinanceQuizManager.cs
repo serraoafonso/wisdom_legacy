@@ -17,6 +17,8 @@ public class FinanceQuizManager : MonoBehaviour
     public TextMeshProUGUI themeText;
     public TextMeshProUGUI financePointsText;
     public GameObject Canva;
+    public TextMeshProUGUI textBtn;
+
 
     [SerializeField] private GhostText ghostText;
     public PlayerMovement playerMovement;
@@ -134,6 +136,14 @@ public class FinanceQuizManager : MonoBehaviour
 
     private void Start()
     {
+        if(GameData.language == "en")
+        {
+            textBtn.text = "Next";
+        }
+        else
+        {
+            textBtn.text = "Seguinte";
+        }
         audioSource.clip = null;
         InitializeFactIndexes();
         DisplayRandomFact();

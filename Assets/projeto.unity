@@ -3016,6 +3016,7 @@ MonoBehaviour:
   themeText: {fileID: 346775262}
   financePointsText: {fileID: 1390373264}
   Canva: {fileID: 180364210}
+  textBtn: {fileID: 430891340}
   ghostText: {fileID: 1103392675}
   playerMovement: {fileID: 883604047}
   book1: {fileID: 1256461934}
@@ -6314,6 +6315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 376094991}
+  texto: {fileID: 1441202023}
+  textoBtn: {fileID: 721060159}
 --- !u!1 &386218253
 GameObject:
   m_ObjectHideFlags: 0
@@ -10128,6 +10131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 633021139}
+  texto: {fileID: 967965157}
+  textoBtn: {fileID: 0}
 --- !u!114 &633021141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10231,6 +10236,9 @@ MonoBehaviour:
   sciencePoints: {fileID: 1432409933}
   historyPoints: {fileID: 446169542}
   financePoints: {fileID: 1390373264}
+  texto: {fileID: 967965157}
+  textoBtnStay: {fileID: 2034058524}
+  textoBtnLeave: {fileID: 1695235409}
 --- !u!1 &634756269 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2253911629886400664, guid: aecb37171a5db474c910da720649f75a, type: 3}
@@ -15020,6 +15028,7 @@ GameObject:
   - component: {fileID: 934221535}
   - component: {fileID: 934221534}
   - component: {fileID: 934221537}
+  - component: {fileID: 934221538}
   m_Layer: 5
   m_Name: VictoryPanel
   m_TagString: Untagged
@@ -15107,6 +15116,20 @@ MonoBehaviour:
   Text1: {fileID: 0}
   Text2: {fileID: 0}
   Text3: {fileID: 0}
+--- !u!114 &934221538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934221533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0181c957bb70942ab4d4a4d0bf59f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBtn: {fileID: 1917951808}
+  texto: {fileID: 762260125}
 --- !u!1 &938271903
 GameObject:
   m_ObjectHideFlags: 0
@@ -18470,6 +18493,7 @@ GameObject:
   - component: {fileID: 1091282581}
   - component: {fileID: 1091282580}
   - component: {fileID: 1091282579}
+  - component: {fileID: 1091282584}
   m_Layer: 5
   m_Name: NextSteps
   m_TagString: Untagged
@@ -18579,6 +18603,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1091282584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091282578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5230dedf375b5344ba6506f09ded3cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texto: {fileID: 1045772270}
 --- !u!1 &1096651569
 GameObject:
   m_ObjectHideFlags: 0
@@ -20863,6 +20900,7 @@ MonoBehaviour:
   themeText: {fileID: 621926958}
   HistoryPointsText: {fileID: 446169542}
   Canva: {fileID: 1239337297}
+  textBtn: {fileID: 1021017354}
   ghostText: {fileID: 1103392675}
   playerMovement: {fileID: 883604047}
   book1: {fileID: 1542252601}
@@ -23250,6 +23288,7 @@ MonoBehaviour:
   themeText: {fileID: 1538845723}
   sciencePointsText: {fileID: 1432409933}
   Canva: {fileID: 1477078949}
+  textBtn: {fileID: 509602006}
   ghostText: {fileID: 1103392675}
   playerMovement: {fileID: 883604047}
   book1: {fileID: 290713631}

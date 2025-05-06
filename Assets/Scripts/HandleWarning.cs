@@ -11,10 +11,25 @@ public class HandleWarning : MonoBehaviour
     public TextMeshProUGUI sciencePoints;
     public TextMeshProUGUI historyPoints;
     public TextMeshProUGUI financePoints;
+    public TextMeshProUGUI texto;
+    public TextMeshProUGUI textoBtnStay;
+    public TextMeshProUGUI textoBtnLeave;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(GameData.language == "en")
+        {
+            texto.text = "Are you sure you want to exit? All progress made will be lost.";
+            textoBtnStay.text = "Stay";
+            textoBtnLeave.text = "Leave";
+        }
+        else
+        {
+            texto.text = "Tens a certeza que queres sair? Todo o progresso feito será perdido.";
+            textoBtnStay.text = "Ficar";
+            textoBtnLeave.text = "Sair";
+        }
     }
 
     public void onButtonStayClicked()
