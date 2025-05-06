@@ -27,18 +27,18 @@ public class HistoryQuizManager : MonoBehaviour
     private List<int> factIndexes;
 
     private string[] historyFactsPT = {
-        "O Renascimento foi um movimento cultural que ocorreu na Europa...",
-        "A Revolução Francesa, que começou em 1789...",
-        "A Guerra Civil Americana (1861-1865)...",
-        "A Primeira Guerra Mundial (1914-1918)...",
-        "A Era das Grandes Navegações...",
-        "A criação da Organização das Nações Unidas...",
-        "A Revolução Industrial, que começou no século XVIII...",
-        "A Declaração de Independência dos Estados Unidos foi assinada em 1776...",
-        "A Segunda Guerra Mundial (1939-1945)...",
-        "O Tratado de Versalhes, assinado em 1919...",
-        "O Império Romano foi uma das civilizações mais influentes..."
-    };
+    "O Renascimento foi um movimento cultural que ocorreu na Europa entre os séculos XIV e XVII, caracterizado pelo ressurgimento das artes, ciências e do pensamento humanista.",
+    "A Revolução Francesa, que começou em 1789, foi um marco que derrubou a monarquia absolutista na França, resultando em profundas mudanças sociais e políticas.",
+    "A Guerra Civil Americana (1861-1865) foi um conflito entre os estados do Norte e do Sul dos EUA, em grande parte devido à questão da escravidão e à luta pela preservação da União.",
+    "A Primeira Guerra Mundial (1914-1918) envolveu grandes potências mundiais e resultou em milhões de mortos, além de mudanças significativas no mapa político da Europa.",
+    "A Era das Grandes Navegações, entre os séculos XV e XVII, foi um período de expansão marítima europeia que levou à descoberta de novas rotas e territórios ao redor do mundo.",
+    "A criação da Organização das Nações Unidas (ONU) em 1945 teve como objetivo promover a paz e a cooperação internacional após a devastação da Segunda Guerra Mundial.",
+    "A Revolução Industrial, que começou no século XVIII, transformou a economia mundial com o surgimento de máquinas e fábricas, promovendo urbanização e inovação tecnológica.",
+    "A Declaração de Independência dos Estados Unidos foi assinada em 1776, marcando a separação oficial das Treze Colônias do domínio britânico.",
+    "A Segunda Guerra Mundial (1939-1945) foi um conflito global que envolveu as principais potências mundiais e levou à divisão do mundo entre blocos ideológicos.",
+    "O Tratado de Versalhes, assinado em 1919, marcou o fim oficial da Primeira Guerra Mundial, impondo condições severas à Alemanha.",
+    "O Império Romano foi uma das civilizações mais influentes da história, deixando um legado em áreas como direito, engenharia e cultura."
+};
 
     private string[] historyQuestionsPT = {
         "Qual foi o impacto cultural do Renascimento na Europa?",
@@ -84,17 +84,17 @@ public class HistoryQuizManager : MonoBehaviour
 
     // Dados em inglês
     private string[] historyFactsEN = {
-        "The Renaissance was a cultural movement in Europe...",
-        "The French Revolution, which began in 1789...",
-        "The American Civil War (1861–1865)...",
-        "World War I (1914–1918)...",
-        "The Age of Exploration...",
-        "The United Nations (UN) was created in 1945...",
-        "The Industrial Revolution, which began in the 18th century...",
-        "The U.S. Declaration of Independence was signed in 1776...",
-        "World War II (1939–1945)...",
-        "The Treaty of Versailles, signed in 1919...",
-        "The Roman Empire was one of the most influential..."
+        "The Renaissance was a cultural movement that occurred in Europe between the 14th and 17th centuries, characterized by the revival of arts, sciences, and humanist thinking.",
+        "The French Revolution, which began in 1789, was a milestone that overthrew the absolutist monarchy in France, resulting in profound social and political changes.",
+        "The American Civil War (1861-1865) was a conflict between the Northern and Southern states of the USA, largely due to the issue of slavery and the fight to preserve the Union.",
+        "World War I (1914-1918) involved major world powers and resulted in millions of deaths, as well as significant changes to Europe's political map.",
+        "The Age of Exploration, between the 15th and 17th centuries, was a period of European maritime expansion that led to the discovery of new routes and territories around the world.",
+        "The United Nations (UN) was created in 1945 with the goal of promoting peace and international cooperation after the devastation of World War II.",
+        "The Industrial Revolution, which began in the 18th century, transformed the world economy with the emergence of machines and factories, promoting urbanization and technological innovation.",
+        "The U.S. Declaration of Independence was signed in 1776, marking the official separation of the Thirteen Colonies from British rule.",
+        "World War II (1939-1945) was a global conflict that involved the world's major powers and led to the division of the world between ideological blocs.",
+        "The Treaty of Versailles, signed in 1919, marked the official end of World War I, imposing severe conditions on Germany.",
+        "The Roman Empire was one of the most influential civilizations in history, leaving a legacy in areas such as law, engineering, and culture."
     };
 
     private string[] historyQuestionsEN = {

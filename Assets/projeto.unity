@@ -3511,6 +3511,7 @@ GameObject:
   - component: {fileID: 197818215}
   - component: {fileID: 197818214}
   - component: {fileID: 197818212}
+  - component: {fileID: 197818218}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -3620,6 +3621,19 @@ RectTransform:
   m_AnchoredPosition: {x: -38.92, y: 9.54}
   m_SizeDelta: {x: 48.2639, y: 30.3761}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &197818218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197818211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21d3d4a560f9ac4e9d3ae2eb11a12fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texto: {fileID: 193347346}
 --- !u!1 &211600177
 GameObject:
   m_ObjectHideFlags: 0
@@ -15012,7 +15026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &934221534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15090,6 +15104,9 @@ MonoBehaviour:
   NextSteps: {fileID: 1091282578}
   LastCanvas: {fileID: 545617181}
   Levels: {fileID: 0}
+  Text1: {fileID: 0}
+  Text2: {fileID: 0}
+  Text3: {fileID: 0}
 --- !u!1 &938271903
 GameObject:
   m_ObjectHideFlags: 0
@@ -16844,6 +16861,9 @@ MonoBehaviour:
   NextSteps: {fileID: 1091282578}
   LastCanvas: {fileID: 0}
   Levels: {fileID: 2010303487}
+  Text1: {fileID: 710395064}
+  Text2: {fileID: 1811654796}
+  Text3: {fileID: 276787811}
 --- !u!1 &1021017352
 GameObject:
   m_ObjectHideFlags: 0
@@ -18716,6 +18736,9 @@ MonoBehaviour:
   historyPoints: {fileID: 1250524752}
   financePoints: {fileID: 630275273}
   text_soon: {fileID: 1640458883}
+  Text1: {fileID: 999015650}
+  Text2: {fileID: 135286892}
+  Text3: {fileID: 587511064}
 --- !u!1 &1099883804
 GameObject:
   m_ObjectHideFlags: 0

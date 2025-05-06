@@ -231,7 +231,7 @@ public class FinanceQuizManager : MonoBehaviour
             {
                 player.transform.position = playerPosition.y < 10
                     ? new Vector3(-39, 9.531775f, player.transform.position.z)
-                    : new Vector3(-130, 79, player.transform.position.z);
+                    : new Vector3(-50, 56.5f, player.transform.position.z);
             }
 
             StartCoroutine(HandleAnswerFeedback(false, botao));
@@ -251,12 +251,24 @@ public class FinanceQuizManager : MonoBehaviour
 
     private GameObject DetermineBookBasedOnPlayerPosition()
     {
-        Vector3 pos = player.transform.position;
+        Vector3 playerPosition = player.transform.position;
 
-        if (pos.y < 10) return book1;
-        if (pos.x <= -100) return book2;
-        if (pos.x <= -80) return book3;
-        return book4;
+        if (playerPosition.y < 10) // Exemplo de condição
+        {
+            return book1;
+        }
+        else if (playerPosition.x >= -60)
+        {
+            return book2;
+        }
+        else if (playerPosition.x >= -80)
+        {
+            return book3;
+        }
+        else
+        {
+            return book4;
+        }
     }
 
     private void DisableBookCollider(GameObject book)

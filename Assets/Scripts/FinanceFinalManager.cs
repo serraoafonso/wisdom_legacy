@@ -5,25 +5,26 @@ using System.Collections.Generic;
 
 public class FinanceFinalManager : MonoBehaviour
 {
-    public TextMeshProUGUI questionText; // Texto da pergunta
-    public Button[] answerButtons; // Botões de resposta
-    public AudioSource audioSource; // AudioSource para sons de resposta
-    public AudioClip correctSound; // Som de resposta correta
-    public AudioClip incorrectSound; // Som de resposta incorreta
-    public GameObject quizPanel; // Painel que exibe a pergunta e opções
-    public GameObject victoryPanel; // Painel de vitória
-    public TextMeshProUGUI FinancePointsText;
+    public TextMeshProUGUI questionText; // Question text
+    public Button[] answerButtons; // Answer buttons
+    public AudioSource audioSource; // AudioSource for response sounds
+    public AudioClip correctSound; // Correct answer sound
+    public AudioClip incorrectSound; // Incorrect answer sound
+    public GameObject quizPanel; // Panel that displays the question and options
+    public GameObject victoryPanel; // Victory panel
+    public TextMeshProUGUI FinancePointsText; // Text for finance points
 
-    public GameObject finalCanvas; // Canvas final
-    public GameObject book1; // Referência ao objeto do livro ou similar
-    public PlayerMovement playerMovement; // Referência ao script de movimento do jogador
-
-    private int correctAnswersCount; // Contador de respostas corretas seguidas
+    public GameObject finalCanvas;
+    public GameObject book1; // Reference to the book object
+    public PlayerMovement playerMovement;
+    private int correctAnswersCount; // Consecutive correct answers count
     private int currentQuestionIndex;
     private List<int> questionIndexes;
-    private List<string> answerOptions;
 
-    // Perguntas e respostas em diferentes idiomas
+    // Language-dependent quiz data
+    private string language;
+
+    // Data for questions and answers in both languages
     private string[] questionsPT = {
         "Qual é a principal vantagem de poupar parte da renda mensal?",
         "Por que é importante planejar a aposentadoria desde cedo?",
@@ -36,20 +37,6 @@ public class FinanceFinalManager : MonoBehaviour
         "Quais são os impactos do endividamento excessivo na saúde financeira?",
         "Quais são as vantagens e os riscos de investir em ações?",
         "Qual é o principal benefício de criar um orçamento mensal?"
-    };
-
-    private string[] questionsEN = {
-        "What is the main advantage of saving part of your monthly income?",
-        "Why is it important to plan retirement early?",
-        "What is the purpose of the IRS (Income Tax for Individuals) in Portugal?",
-        "What is one of the main disadvantages of credit cards?",
-        "What is the purpose of a student loan?",
-        "How does setting financial goals help personal planning?",
-        "Why is it important to diversify investments?",
-        "What is the main goal of an emergency fund?",
-        "What are the impacts of excessive debt on financial health?",
-        "What are the advantages and risks of investing in stocks?",
-        "What is the main benefit of creating a monthly budget?"
     };
 
     private string[] correctAnswersPT = {
@@ -66,20 +53,6 @@ public class FinanceFinalManager : MonoBehaviour
         "Ajuda a monitorar receitas e despesas, evitando dívidas e alcançando metas financeiras."
     };
 
-    private string[] correctAnswersEN = {
-        "Creates a financial base for unforeseen events and achieving long-term goals.",
-        "To ensure a source of income in the future and maintain the desired standard of living.",
-        "It is a mandatory tax that finances public services and operates according to an individual's annual income bracket.",
-        "High interest rates in case of delays, which can generate hard-to-pay debts.",
-        "It allows financing education and repaying the loan with easier conditions.",
-        "Helps to guide financial planning and achieve specific goals.",
-        "To reduce financial risks and increase stability by spreading capital across different assets.",
-        "To have enough resources to deal with emergencies without resorting to debt.",
-        "Limits the ability to save and invest, and causes long-term financial difficulties.",
-        "Allows profiting from the growth of companies, but involves a higher risk of capital loss.",
-        "Helps monitor income and expenses, avoiding debt and achieving financial goals."
-    };
-
     private string[][] incorrectAnswersPT = new string[][] {
         new string[] { "É um recurso opcional, sem grande impacto no futuro financeiro.", "Serve apenas para gastar em viagens e lazer." },
         new string[] { "Para aumentar a quantidade de gastos na juventude.", "Para garantir benefícios como férias prolongadas na aposentadoria." },
@@ -92,6 +65,34 @@ public class FinanceFinalManager : MonoBehaviour
         new string[] { "Melhora a capacidade de poupar para o futuro.", "Facilita a obtenção de crédito com juros baixos." },
         new string[] { "É totalmente seguro e garante lucros fixos.", "Não requer análise de mercado para tomar decisões." },
         new string[] { "Permite gastar sem restrições mensais.", "Facilita o endividamento ao longo do tempo." }
+    };
+
+    private string[] questionsEN = {
+        "What is the main advantage of saving part of your monthly income?",
+        "Why is it important to plan retirement early?",
+        "What is the purpose of the IRS (Income Tax for Individuals) in Portugal?",
+        "What is one of the main disadvantages of credit cards?",
+        "What is the purpose of a student loan?",
+        "How does setting financial goals help personal planning?",
+        "Why is it important to diversify investments?",
+        "What is the main goal of an emergency fund?",
+        "What are the impacts of excessive debt on financial health?",
+        "What are the advantages and risks of investing in stocks?",
+        "What is the main benefit of creating a monthly budget?"
+    };
+
+    private string[] correctAnswersEN = {
+        "Creates a financial base for unforeseen events and achieving long-term goals.",
+        "To ensure a source of income in the future and maintain the desired standard of living.",
+        "It is a mandatory tax that finances public services and operates according to an individual's annual income bracket.",
+        "High interest rates in case of delays, which can generate hard-to-pay debts.",
+        "It allows financing education and repaying the loan with easier conditions.",
+        "Helps to guide financial planning and achieve specific goals.",
+        "To reduce financial risks and increase stability by spreading capital across different assets.",
+        "To have enough resources to deal with emergencies without resorting to debt.",
+        "Limits the ability to save and invest, and causes long-term financial difficulties.",
+        "Allows profiting from the growth of companies, but involves a higher risk of capital loss.",
+        "Helps monitor income and expenses, avoiding debt and achieving financial goals."
     };
 
     private string[][] incorrectAnswersEN = new string[][] {
@@ -110,26 +111,47 @@ public class FinanceFinalManager : MonoBehaviour
 
     private void Start()
     {
+        // Get current language from GameData
+        language = GameData.language;
+
+        // Update the finance points display
+        FinancePointsText.text = GameData.financePoints.ToString();
+
         StartQuiz();
     }
 
     private void StartQuiz()
     {
-        // Inicializa o quiz com todas as perguntas novamente
+        // Initialize the quiz with all the questions
         questionIndexes = new List<int>();
-        for (int i = 0; i < questionsPT.Length; i++)
+        for (int i = 0; i < GetQuestions().Length; i++)
         {
             questionIndexes.Add(i);
         }
         ShuffleQuestions();
-        correctAnswersCount = 0; // Reseta contador de respostas corretas seguidas
+        correctAnswersCount = 0; // Reset consecutive correct answers counter
         LoadQuestion();
 
-        // Desativa o movimento do jogador enquanto o quiz está ativo
+        // Disable player movement while quiz is active
         if (playerMovement != null)
         {
             playerMovement.collidedStop = true;
         }
+    }
+
+    private string[] GetQuestions()
+    {
+        return language == "en" ? questionsEN : questionsPT;
+    }
+
+    private string[] GetCorrectAnswers()
+    {
+        return language == "en" ? correctAnswersEN : correctAnswersPT;
+    }
+
+    private string[][] GetIncorrectAnswers()
+    {
+        return language == "en" ? incorrectAnswersEN : incorrectAnswersPT;
     }
 
     private void ShuffleQuestions()
@@ -154,28 +176,16 @@ public class FinanceFinalManager : MonoBehaviour
         currentQuestionIndex = questionIndexes[0];
         questionIndexes.RemoveAt(0);
 
-        string selectedLanguage = GameData.language; // Verifica o idioma atual
-
-        if (selectedLanguage == "pt")
-        {
-            questionText.text = questionsPT[currentQuestionIndex];
-            List<string> answerOptions = new List<string>(incorrectAnswersPT[currentQuestionIndex]);
-            answerOptions.Add(correctAnswersPT[currentQuestionIndex]);
-            ShuffleList(answerOptions); // Método para embaralhar respostas
-        }
-        else
-        {
-            questionText.text = questionsEN[currentQuestionIndex];
-            List<string> answerOptions = new List<string>(incorrectAnswersEN[currentQuestionIndex]);
-            answerOptions.Add(correctAnswersEN[currentQuestionIndex]);
-            ShuffleList(answerOptions); // Método para embaralhar respostas
-        }
+        questionText.text = GetQuestions()[currentQuestionIndex];
+        List<string> answerOptions = new List<string>(GetIncorrectAnswers()[currentQuestionIndex]);
+        answerOptions.Add(GetCorrectAnswers()[currentQuestionIndex]);
+        ShuffleList(answerOptions); // Shuffle the answers
 
         for (int i = 0; i < answerButtons.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answerOptions[i];
             answerButtons[i].onClick.RemoveAllListeners();
-            bool isCorrect = answerOptions[i] == (selectedLanguage == "pt" ? correctAnswersPT[currentQuestionIndex] : correctAnswersEN[currentQuestionIndex]);
+            bool isCorrect = answerOptions[i] == GetCorrectAnswers()[currentQuestionIndex];
             answerButtons[i].onClick.AddListener(() => Answer(isCorrect));
         }
     }
@@ -200,34 +210,42 @@ public class FinanceFinalManager : MonoBehaviour
 
             GameData.financePoints++;
             FinancePointsText.text = GameData.financePoints.ToString();
+
             if (correctAnswersCount >= 3)
             {
-                DisableBookCollider(book1); // Desativa o livro
-                playerMovement.collidedStop = false; // Reativa o movimento do jogador
-                finalCanvas.SetActive(false); // Fecha o canvas final
                 GameData.financePoints += 3;
                 FinancePointsText.text = GameData.financePoints.ToString();
+                playerMovement.collidedStop = false;
+                DisableBookCollider(book1);
+                finalCanvas.SetActive(false);
                 return;
             }
         }
         else
         {
+            audioSource.PlayOneShot(incorrectSound);
+
             if (GameData.financePoints > 1)
             {
                 GameData.financePoints -= 2;
-
             }
             else
             {
                 GameData.financePoints = 0;
             }
             FinancePointsText.text = GameData.financePoints.ToString();
-            audioSource.PlayOneShot(incorrectSound);
-            correctAnswersCount = 0; // Reinicia contagem de respostas corretas seguidas
-            StartQuiz(); // Reinicia o quiz
+
+            correctAnswersCount = 0; // Reset the count of consecutive correct answers
+            StartQuiz(); // Restart the quiz
             return;
         }
         LoadQuestion();
+    }
+
+    private void Victory()
+    {
+        quizPanel.SetActive(false);
+        victoryPanel.SetActive(true);
     }
 
     private void DisableBookCollider(GameObject book)
@@ -239,30 +257,30 @@ public class FinanceFinalManager : MonoBehaviour
 
             if (bookCollider != null)
             {
-                bookCollider.enabled = false; // Desativa o Box Collider 2D
-                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+                bookCollider.enabled = false; // Disable the Box Collider 2D
+                Debug.Log($"Box Collider 2D of the book {book.name} disabled.");
             }
             else
             {
-                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+                Debug.LogWarning($"Box Collider 2D not found on the book {book.name}.");
             }
 
             if (bookRigidbody != null)
             {
-                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Define o corpo como dinâmico
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Set body type to Dynamic
                 bookRigidbody.gravityScale = 10;
-                Debug.Log($"Rigidbody2D do livro {book.name} definido como dinâmico.");
+                Debug.Log($"Rigidbody2D of the book {book.name} set to Dynamic.");
             }
             else
             {
-                Debug.LogWarning($"Rigidbody2D não encontrado no livro {book.name}.");
+                Debug.LogWarning($"Rigidbody2D not found on the book {book.name}.");
             }
 
-            Destroy(book, 5); // Destroi o livro após 5 segundos
+            Destroy(book, 5); // Destroy the book after 5 seconds
         }
         else
         {
-            Debug.LogWarning($"Livro não encontrado.");
+            Debug.LogWarning("Book not found.");
         }
     }
 }

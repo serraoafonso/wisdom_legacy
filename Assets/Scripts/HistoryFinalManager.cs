@@ -5,25 +5,26 @@ using System.Collections.Generic;
 
 public class HistoryFinalManager : MonoBehaviour
 {
-    public TextMeshProUGUI questionText; // Texto da pergunta
-    public Button[] answerButtons; // Botões de resposta
-    public AudioSource audioSource; // AudioSource para sons de resposta
-    public AudioClip correctSound; // Som de resposta correta
-    public AudioClip incorrectSound; // Som de resposta incorreta
-    public GameObject quizPanel; // Painel que exibe a pergunta e opções
-    public GameObject victoryPanel; // Painel de vitória
-    public TextMeshProUGUI HistoryPointsText; // Texto de pontos de história
+    public TextMeshProUGUI questionText; // Question text
+    public Button[] answerButtons; // Answer buttons
+    public AudioSource audioSource; // AudioSource for response sounds
+    public AudioClip correctSound; // Correct answer sound
+    public AudioClip incorrectSound; // Incorrect answer sound
+    public GameObject quizPanel; // Panel that displays the question and options
+    public GameObject victoryPanel; // Victory panel
+    public TextMeshProUGUI HistoryPointsText; // Text for history points
 
-    public GameObject finalCanvas; // Canvas final
-    public GameObject book1; // Referência ao objeto do livro
-    public PlayerMovement playerMovement; // Controle do movimento do jogador
-
-    private int correctAnswersCount; // Contador de respostas corretas seguidas
+    public GameObject finalCanvas;
+    public GameObject book1; // Reference to the book object
+    public PlayerMovement playerMovement;
+    private int correctAnswersCount; // Consecutive correct answers count
     private int currentQuestionIndex;
-    private List<string> answerOptions;
-     private List<int> questionIndexes;
+    private List<int> questionIndexes;
 
-    // Perguntas e respostas em diferentes idiomas
+    // Language-dependent quiz data
+    private string language;
+
+    // Data for questions and answers in both languages
     private string[] questionsPT = {
         "Qual foi o impacto cultural do Renascimento na Europa?",
         "Quais foram algumas das principais consequências da Revolução Francesa?",
@@ -36,20 +37,6 @@ public class HistoryFinalManager : MonoBehaviour
         "Quais foram as principais consequências da Segunda Guerra Mundial?",
         "O que foi o Tratado de Versalhes e qual foi seu impacto na Alemanha?",
         "Qual foi o legado mais duradouro do Império Romano?"
-    };
-
-    private string[] questionsEN = {
-        "What was the cultural impact of the Renaissance in Europe?",
-        "What were some of the main consequences of the French Revolution?",
-        "What was the central cause of the American Civil War?",
-        "What was the main result of World War I for the European political map?",
-        "What was the main goal of the Age of Exploration?",
-        "Why was the United Nations created in 1945?",
-        "What was the impact of the Industrial Revolution on the world?",
-        "What did the signing of the Declaration of Independence represent?",
-        "What were the main consequences of World War II?",
-        "What was the Treaty of Versailles and what was its impact on Germany?",
-        "What was the most enduring legacy of the Roman Empire?"
     };
 
     private string[] correctAnswersPT = {
@@ -66,20 +53,6 @@ public class HistoryFinalManager : MonoBehaviour
         "Legado em áreas como direito, engenharia, arquitetura e cultura que influenciam até hoje."
     };
 
-    private string[] correctAnswersEN = {
-        "Revival of the arts and sciences and strengthening of humanist thought.",
-        "Overthrow of the monarchy and establishment of principles of equality and liberty.",
-        "Conflict between Northern and Southern states over slavery and preserving the Union.",
-        "Significant changes in European borders and the weakening of traditional empires.",
-        "Discovering new routes and territories to expand trade and European influence.",
-        "Promote peace and international cooperation after World War II.",
-        "Transformed the global economy, promoting urbanization, innovation, and the rise of factories.",
-        "Official separation of the Thirteen Colonies from British rule and the formation of an independent nation.",
-        "Division of the world between ideological blocs and reconstruction of war-torn countries.",
-        "Imposition of severe conditions on Germany, leading to future political tensions.",
-        "Legacy in areas like law, engineering, architecture, and culture that still influence today."
-    };
-
     private string[][] incorrectAnswersPT = new string[][] {
         new string[] { "Declínio do interesse em ciências e artes, com foco exclusivo em religião.", "Expansão da monarquia absoluta na Europa." },
         new string[] { "Fortalecimento da monarquia na França.", "Criação de uma aliança entre França e Inglaterra contra a Áustria." },
@@ -92,6 +65,34 @@ public class HistoryFinalManager : MonoBehaviour
         new string[] { "A unificação imediata de todas as nações sob um governo global.", "O fortalecimento dos impérios europeus em todo o mundo." },
         new string[] { "A restauração da monarquia alemã após a guerra.", "Uma aliança entre França e Alemanha para reconstrução econômica." },
         new string[] { "Impacto limitado à península Itálica, sem influenciar outras civilizações.", "Apenas conquistas militares, sem legado cultural ou jurídico." }
+    };
+
+    private string[] questionsEN = {
+        "What was the cultural impact of the Renaissance in Europe?",
+        "What were some of the main consequences of the French Revolution?",
+        "What was the central cause of the American Civil War?",
+        "What was the main result of World War I for the European political map?",
+        "What was the main goal of the Age of Exploration?",
+        "Why was the United Nations created in 1945?",
+        "What was the impact of the Industrial Revolution on the world?",
+        "What did the signing of the Declaration of Independence represent?",
+        "What were the main consequences of World War II?",
+        "What was the Treaty of Versailles and what was its impact on Germany?",
+        "What was the most enduring legacy of the Roman Empire?"
+    };
+
+    private string[] correctAnswersEN = {
+        "Revival of the arts and sciences and strengthening of humanist thought.",
+        "Overthrow of the monarchy and establishment of principles of equality and liberty.",
+        "Conflict between Northern and Southern states over slavery and preserving the Union.",
+        "Significant changes in European borders and the weakening of traditional empires.",
+        "Discovering new routes and territories to expand trade and European influence.",
+        "Promote peace and international cooperation after World War II.",
+        "Transformed the global economy, promoting urbanization, innovation, and the rise of factories.",
+        "Official separation of the Thirteen Colonies from British rule and the formation of an independent nation.",
+        "Division of the world between ideological blocs and reconstruction of war-torn countries.",
+        "Imposition of severe conditions on Germany, leading to future political tensions.",
+        "Legacy in areas like law, engineering, architecture, and culture that still influence today."
     };
 
     private string[][] incorrectAnswersEN = new string[][] {
@@ -110,20 +111,41 @@ public class HistoryFinalManager : MonoBehaviour
 
     private void Start()
     {
+        // Get current language from GameData
+        language = GameData.language;
+
+        // Update the history points display
+        HistoryPointsText.text = GameData.historyPoints.ToString();
+
         StartQuiz();
     }
 
     private void StartQuiz()
     {
-        // Inicializa o quiz com todas as perguntas
+        // Initialize the quiz with all the questions
         questionIndexes = new List<int>();
-        for (int i = 0; i < questionsPT.Length; i++)
+        for (int i = 0; i < GetQuestions().Length; i++)
         {
             questionIndexes.Add(i);
         }
         ShuffleQuestions();
-        correctAnswersCount = 0; // Reseta contador de respostas corretas seguidas
+        correctAnswersCount = 0; // Reset consecutive correct answers counter
         LoadQuestion();
+    }
+
+    private string[] GetQuestions()
+    {
+        return language == "en" ? questionsEN : questionsPT;
+    }
+
+    private string[] GetCorrectAnswers()
+    {
+        return language == "en" ? correctAnswersEN : correctAnswersPT;
+    }
+
+    private string[][] GetIncorrectAnswers()
+    {
+        return language == "en" ? incorrectAnswersEN : incorrectAnswersPT;
     }
 
     private void ShuffleQuestions()
@@ -148,28 +170,16 @@ public class HistoryFinalManager : MonoBehaviour
         currentQuestionIndex = questionIndexes[0];
         questionIndexes.RemoveAt(0);
 
-        string selectedLanguage = GameData.language; // Verifica o idioma atual
-
-        if (selectedLanguage == "pt")
-        {
-            questionText.text = questionsPT[currentQuestionIndex];
-            List<string> answerOptions = new List<string>(incorrectAnswersPT[currentQuestionIndex]);
-            answerOptions.Add(correctAnswersPT[currentQuestionIndex]);
-            ShuffleList(answerOptions); // Método para embaralhar respostas
-        }
-        else
-        {
-            questionText.text = questionsEN[currentQuestionIndex];
-            List<string> answerOptions = new List<string>(incorrectAnswersEN[currentQuestionIndex]);
-            answerOptions.Add(correctAnswersEN[currentQuestionIndex]);
-            ShuffleList(answerOptions); // Método para embaralhar respostas
-        }
+        questionText.text = GetQuestions()[currentQuestionIndex];
+        List<string> answerOptions = new List<string>(GetIncorrectAnswers()[currentQuestionIndex]);
+        answerOptions.Add(GetCorrectAnswers()[currentQuestionIndex]);
+        ShuffleList(answerOptions); // Shuffle the answers
 
         for (int i = 0; i < answerButtons.Length; i++)
         {
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answerOptions[i];
             answerButtons[i].onClick.RemoveAllListeners();
-            bool isCorrect = answerOptions[i] == (selectedLanguage == "pt" ? correctAnswersPT[currentQuestionIndex] : correctAnswersEN[currentQuestionIndex]);
+            bool isCorrect = answerOptions[i] == GetCorrectAnswers()[currentQuestionIndex];
             answerButtons[i].onClick.AddListener(() => Answer(isCorrect));
         }
     }
@@ -194,18 +204,21 @@ public class HistoryFinalManager : MonoBehaviour
 
             GameData.historyPoints++;
             HistoryPointsText.text = GameData.historyPoints.ToString();
+
             if (correctAnswersCount >= 3)
             {
+                GameData.historyPoints += 3;
+                HistoryPointsText.text = GameData.historyPoints.ToString();
                 playerMovement.collidedStop = false;
                 DisableBookCollider(book1);
                 finalCanvas.SetActive(false);
-                GameData.historyPoints += 3;
-                HistoryPointsText.text = GameData.historyPoints.ToString();
                 return;
             }
         }
         else
         {
+            audioSource.PlayOneShot(incorrectSound);
+
             if (GameData.historyPoints > 1)
             {
                 GameData.historyPoints -= 2;
@@ -215,12 +228,18 @@ public class HistoryFinalManager : MonoBehaviour
                 GameData.historyPoints = 0;
             }
             HistoryPointsText.text = GameData.historyPoints.ToString();
-            audioSource.PlayOneShot(incorrectSound);
-            correctAnswersCount = 0; // Reinicia contagem de respostas corretas seguidas
-            StartQuiz(); // Reinicia o quiz
+
+            correctAnswersCount = 0; // Reset the count of consecutive correct answers
+            StartQuiz(); // Restart the quiz
             return;
         }
         LoadQuestion();
+    }
+
+    private void Victory()
+    {
+        quizPanel.SetActive(false);
+        victoryPanel.SetActive(true);
     }
 
     private void DisableBookCollider(GameObject book)
@@ -232,30 +251,30 @@ public class HistoryFinalManager : MonoBehaviour
 
             if (bookCollider != null)
             {
-                bookCollider.enabled = false; // Desativa o Box Collider 2D
-                Debug.Log($"Box Collider 2D do livro {book.name} desativado.");
+                bookCollider.enabled = false; // Disable the Box Collider 2D
+                Debug.Log($"Box Collider 2D of the book {book.name} disabled.");
             }
             else
             {
-                Debug.LogWarning($"Box Collider 2D não encontrado no livro {book.name}.");
+                Debug.LogWarning($"Box Collider 2D not found on the book {book.name}.");
             }
 
             if (bookRigidbody != null)
             {
-                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Define como Dynamic
+                bookRigidbody.bodyType = RigidbodyType2D.Dynamic; // Set body type to Dynamic
                 bookRigidbody.gravityScale = 10;
-                Debug.Log($"Rigidbody2D do livro {book.name} alterado para Dynamic.");
+                Debug.Log($"Rigidbody2D of the book {book.name} set to Dynamic.");
             }
             else
             {
-                Debug.LogWarning($"Rigidbody2D não encontrado no livro {book.name}.");
+                Debug.LogWarning($"Rigidbody2D not found on the book {book.name}.");
             }
 
             Destroy(book, 5);
         }
         else
         {
-            Debug.LogWarning("Livro não encontrado.");
+            Debug.LogWarning("Book not found.");
         }
     }
 }
