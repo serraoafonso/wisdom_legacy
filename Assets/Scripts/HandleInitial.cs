@@ -71,6 +71,17 @@ public class HandleInitial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameData.language == "en")
+        {
+            Text1.text = "Play";
+            Text2.text = "Credits";
+            Text3.text = "Next steps";
+        }
+        else
+        {
+            Text1.text = "Jogar";
+            Text2.text = "Créditos";
+            Text3.text = "Próximos passos";
+        }
     }
 }

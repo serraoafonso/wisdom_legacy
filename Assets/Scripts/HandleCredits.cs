@@ -24,6 +24,13 @@ public class HandleCredits : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameData.language == "en")
+        {
+            texto.text = "Team leader: Afonso Serrão\r\n\r\nDevelopers: Lourenço Pinto, Afonso Serrão\r\n\r\nDesigner: Francisco Sousa";
+        }
+        else
+        {
+            texto.text = "Líder de equipa: Afonso Serrão\r\n\r\nProgramadores: Lourenço Pinto, Afonso Serrão\r\n\r\nDesigner: Francisco Sousa";
+        }
     }
 }

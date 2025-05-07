@@ -56,6 +56,17 @@ public class HandleStore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameData.language == "en")
+        {
+            Text1.text = "Buy";
+            Text2.text = "Buy";
+            Text3.text = "Buy";
+        }
+        else
+        {
+            Text1.text = "Comprar";
+            Text2.text = "Comprar";
+            Text3.text = "Comprar";
+        }
     }
 }

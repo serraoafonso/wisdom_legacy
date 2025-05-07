@@ -5,6 +5,7 @@ public class LanguageSelector : MonoBehaviour
 {
     public Image currentFlagImage;
     public GameObject optionsPanel;
+    public GameObject canvasBtn;
 
     public Sprite flagPortuguese;
     public Sprite flagEnglish;
@@ -18,6 +19,7 @@ public class LanguageSelector : MonoBehaviour
     public void ToggleOptions()
     {
         optionsPanel.SetActive(!optionsPanel.activeSelf);
+        canvasBtn.SetActive(!canvasBtn.activeSelf);
     }
 
     public void SetLanguage(string lang)
@@ -36,7 +38,8 @@ public class LanguageSelector : MonoBehaviour
             Debug.Log("Language: English");
             GameData.language = "en";
         }
-
+        
+        canvasBtn.SetActive(true);
         optionsPanel.SetActive(false); // Fecha o menu
     }
 }
