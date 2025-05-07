@@ -26,19 +26,37 @@ public class GhostText : MonoBehaviour
 
         if (myText != null)
         {
-            switch (randomCase)
+            if(GameData.language == "en")
             {
-                case 0:
-                    myText.text = "Pelo menos ganhaste a medalha de participação.";
-                    break;
-                case 1:
-                    myText.text = "Não te preocupes, perder faz parte do jogo... mas tu estás te especializando!";
-                    break;
-                case 2:
-                    myText.text = "Quem precisa de vitória quando se tem tanta criatividade na hora de perder?";
-                    break;
+                switch (randomCase)
+                {
+                    case 0:
+                        myText.text = "At least you got the participation medal.";
+                        break;
+                    case 1:
+                        myText.text = "Don't worry, losing is part of the game... but you're specializing!";
+                        break;
+                    case 2:
+                        myText.text = "Who needs victory when you have so much creativity when it comes to losing?";
+                        break;
+                }
             }
-
+            else
+            {
+                switch (randomCase)
+                {
+                    case 0:
+                        myText.text = "Pelo menos ganhaste a medalha de participação.";
+                        break;
+                    case 1:
+                        myText.text = "Não te preocupes, perder faz parte do jogo... mas tu estás te especializando!";
+                        break;
+                    case 2:
+                        myText.text = "Quem precisa de vitória quando se tem tanta criatividade na hora de perder?";
+                        break;
+                }
+            }
+           
             // Start coroutine to disable the GameObject after 5 seconds
             myCoroutine = StartCoroutine(DisableAfterTime(5f));
         }
