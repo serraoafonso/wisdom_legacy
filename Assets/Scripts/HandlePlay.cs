@@ -19,7 +19,7 @@ public class HandlePlay : MonoBehaviour
         }
         else
         {
-            texto.text = "Bem-vindo ao Wisdom Legacy! Tenta chegar ao fim da biblioteca enquando aprendes sobre temas como literacia financeira, ciência e história!";
+            texto.text = "Bem-vindo ao Wisdom Legacy! Tenta chegar ao fim da biblioteca enquanto aprendes sobre temas como literacia financeira, ciência e história!";
             textoBtn.text = "Jogar!";
         }
     }
